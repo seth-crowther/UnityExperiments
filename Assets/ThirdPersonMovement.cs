@@ -6,29 +6,43 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public Transform mainCam;
     public CharacterController controller;
+    public Transform groundCheck;
+
+    public LayerMask groundMask;
 
     public float speed = 6.0f;
     public float turnSmoothTime = 0.1f;
-    public float jumpSpeed = 0.5f;
+    public float jumpHeight = 3f;
+    public float groundDistance = 0.4f;
+    public bool isGrounded;
+    public float gravity = -9.81f * 2f;
 
     float turnSmoothVelocity;
-    private float distToGround;
     private float ySpeed;
-
-    private void Start()
-    {
-        distToGround = controller.bounds.extents.y;
-    }
 
     // Update is called once per frame
     void Update()
     {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        ySpeed += gravity * Time.deltaTime;
+
+        if (isGrounded && ySpeed < 0)
+        {
+            ySpeed = -0.5f;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                ySpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+        }
+       
         if (direction.magnitude >= 0.1f) // If there is some direction input
         {
             // Calculating desired angle for character to face forward
@@ -43,10 +57,8 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 movement = speed * Time.deltaTime * moveDir.normalized;
             controller.Move(movement);
         }
-    }
 
-    public bool IsGrounded() // Doesn't necessarily work, what if capsule is sitting on a small hole. Fix later.
-    {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        Debug.Log(isGrounded);
+        controller.Move(new Vector3(0f, ySpeed, 0f) * Time.deltaTime);
     }
 }
