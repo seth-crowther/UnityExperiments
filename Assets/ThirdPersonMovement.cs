@@ -29,19 +29,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
-        if (!IsGrounded())
-        {
-            ySpeed += Physics.gravity.y * Time.deltaTime;
-        }
-        else if (Input.GetButtonDown("Jump"))
-        {
-            ySpeed = jumpSpeed;
-        }
-        else
-        {
-            ySpeed = 0;
-        }
-
         if (direction.magnitude >= 0.1f) // If there is some direction input
         {
             // Calculating desired angle for character to face forward
@@ -56,9 +43,6 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 movement = speed * Time.deltaTime * moveDir.normalized;
             controller.Move(movement);
         }
-
-        transform.position += new Vector3(0f, ySpeed, 0f) * Time.deltaTime;
-
     }
 
     public bool IsGrounded() // Doesn't necessarily work, what if capsule is sitting on a small hole. Fix later.
