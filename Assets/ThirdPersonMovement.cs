@@ -12,10 +12,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float speed = 6.0f;
     public float turnSmoothTime = 0.1f;
-    public float jumpHeight = 3f;
-    public float groundDistance = 0.4f;
+    public float jumpHeight = 10f;
+    public float groundDistance = 0.1f;
     public bool isGrounded;
-    public float gravity = -9.81f * 2f;
+    public float gravity = -40f;
 
     float turnSmoothVelocity;
     private float ySpeed;
@@ -23,7 +23,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // Getting stuck on platform edges counts as not grounded. Fix.
 
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -35,7 +35,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (isGrounded && ySpeed < 0)
         {
-            ySpeed = -0.5f;
+            ySpeed = -4f;
 
             if (Input.GetButtonDown("Jump"))
             {
