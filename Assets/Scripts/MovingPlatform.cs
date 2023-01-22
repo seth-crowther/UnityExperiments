@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] private WaypointPath waypointPath;
-    [SerializeField] private float speed = 2.0f;
+    [SerializeField] private float speed = 5.0f;
 
     private int nextWayPointIndex = 0;
 
@@ -15,13 +15,11 @@ public class MovingPlatform : MonoBehaviour
     private float timeToWaypoint;
     private float elapsedTime;
 
-    private BoxCollider playerOnTrigger;
     [SerializeField] private LayerMask playerMask;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerOnTrigger = GetComponent<BoxCollider>();
         TargetNextWaypoint();
     }
 

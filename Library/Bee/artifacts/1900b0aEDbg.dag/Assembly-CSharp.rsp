@@ -356,6 +356,10 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/MovingPlatform.cs"
+"Assets/Scripts/Player States/PlayerBaseState.cs"
+"Assets/Scripts/Player States/PlayerClimbingState.cs"
+"Assets/Scripts/Player States/PlayerMovingState.cs"
+"Assets/Scripts/Player States/PlayerStateManager.cs"
 "Assets/Scripts/ThirdPersonMovement.cs"
 "Assets/Scripts/WaypointPath.cs"
 -langversion:9.0
