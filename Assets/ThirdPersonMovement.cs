@@ -13,9 +13,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float speed = 6.0f;
     public float turnSmoothTime = 0.1f;
     public float jumpHeight = 10f;
-    public float groundDistance = 0.1f;
+    public float groundDistance = 1.0f;
     public bool isGrounded;
-    public float gravity = -40f;
+    public float gravity = -60f;
 
     float turnSmoothVelocity;
     private float ySpeed;
@@ -58,7 +58,6 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(movement);
         }
 
-        Debug.Log(isGrounded);
         controller.Move(new Vector3(0f, ySpeed, 0f) * Time.deltaTime);
     }
 }
