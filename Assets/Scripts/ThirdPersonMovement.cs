@@ -23,7 +23,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // Getting stuck on platform edges counts as not grounded. Fix.
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
