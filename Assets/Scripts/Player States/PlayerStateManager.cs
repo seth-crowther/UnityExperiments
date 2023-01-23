@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour
 {
-    public PlayerBaseState currentState;
+    [SerializeField] public PlayerBaseState currentState;
+    public PlayerMovingState movingState;
+    public PlayerClimbingState climbingState;
+    public Transform climbing;
 
     public CharacterController controller;
     public Transform groundCheck;
     public Transform mainCam;
+    public LayerMask groundMask;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerMovingState movingState = new PlayerMovingState(controller, groundCheck, mainCam, transform);
-        PlayerClimbingState climbingState = new PlayerClimbingState();
+        movingState = new PlayerMovingState();
+        climbingState = new PlayerClimbingState();
 
         currentState = movingState;
 
@@ -24,6 +28,16 @@ public class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentState == movingState)
+            Debug.Log("Moving state");
+        else
+            Debug.Log("Climbing state");
         currentState.UpdateState(this);
+    }
+
+    public void ChangeState(PlayerBaseState newState)
+    {
+        currentState = newState;
+        currentState.EnterState(this);
     }
 }
