@@ -21,7 +21,7 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
-        isGrounded = Physics.CheckSphere(player.groundCheck.position, groundDistance, player.groundMask);
+        isGrounded = Physics.CheckSphere(player.groundCheck.position, groundDistance, player.groundMask, QueryTriggerInteraction.Ignore);
 
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
