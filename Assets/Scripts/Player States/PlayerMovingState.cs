@@ -37,6 +37,7 @@ public class PlayerMovingState : PlayerBaseState
 
             if (Input.GetButtonDown("Jump"))
             {
+                // Vertical speed needed to reach a given height
                 ySpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
         }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
+    public PlayerStateManager stateMgr;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Changing to climbing state");
-            PlayerStateManager stateMgr = other.GetComponent<PlayerStateManager>();
             stateMgr.climbing = transform;
             stateMgr.ChangeState(stateMgr.climbingState);
         }
@@ -20,6 +20,7 @@ public class Ladder : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerStateManager stateMgr = other.GetComponent<PlayerStateManager>();
+            stateMgr.climbing = null;
             stateMgr.ChangeState(stateMgr.movingState);
         }
     }

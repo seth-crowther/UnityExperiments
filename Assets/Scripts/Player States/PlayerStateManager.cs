@@ -28,10 +28,6 @@ public class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentState == movingState)
-            Debug.Log("Moving state");
-        else
-            Debug.Log("Climbing state");
         currentState.UpdateState(this);
     }
 

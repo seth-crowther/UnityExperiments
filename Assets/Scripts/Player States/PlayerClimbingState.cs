@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerClimbingState : PlayerBaseState
 {
     public Transform transform;
-    public Transform climbing;
+    private Transform climbing;
 
     public float climbingSpeed = 5.0f;
     public float ySpeed;
@@ -11,11 +11,10 @@ public class PlayerClimbingState : PlayerBaseState
     public float speed = 8.0f;
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
-    
 
     public override void EnterState(PlayerStateManager player)
     {
-
+        climbing = player.climbing;
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -39,10 +38,7 @@ public class PlayerClimbingState : PlayerBaseState
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 movement = speed * Time.deltaTime * moveDir.normalized;
             player.controller.Move(movement);
+            player.controller.Move(climbingSpeed * Time.deltaTime * Vector3.Cross(-player.transform.forward, climbing.right).normalized);
         }
-
-        // Do some logic based on where camera's looking to determine which directional button means go up the ladder
-        ySpeed = vertical * climbingSpeed * Time.deltaTime;
-        player.controller.Move(new Vector3(0f, ySpeed, 0f));
     }
 }

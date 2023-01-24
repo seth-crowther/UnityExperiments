@@ -58,11 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player States\PlayerClimbingState.cs" />
     <Compile Include="Assets\Scripts\Player States\PlayerBaseState.cs" />
+    <Compile Include="Assets\Scripts\Ladder.cs" />
     <Compile Include="Assets\Scripts\Player States\PlayerStateManager.cs" />
     <Compile Include="Assets\Scripts\Player States\PlayerMovingState.cs" />
     <Compile Include="Assets\Scripts\WaypointPath.cs" />
     <Compile Include="Assets\Scripts\MovingPlatform.cs" />
-    <Compile Include="Assets\Scripts\Ladder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
