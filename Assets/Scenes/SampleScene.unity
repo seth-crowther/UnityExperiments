@@ -2625,6 +2625,7 @@ GameObject:
   - component: {fileID: 961100635}
   - component: {fileID: 961100634}
   - component: {fileID: 961100636}
+  - component: {fileID: 961100637}
   m_Layer: 0
   m_Name: PAS
   m_TagString: Untagged
@@ -2686,7 +2687,7 @@ AudioSource:
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
-  BypassListenerEffects: 0
+  BypassListenerEffects: 1
   BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
@@ -2717,7 +2718,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2732,7 +2733,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2757,6 +2758,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &961100637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961100633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d912aed269e8649be929949c9ba792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 963194228}
+  player: {fileID: 1060841265}
+  angleToSpeaker: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2768,7 +2784,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194231}
-  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2868,20 +2883,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &963194232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8d912aed269e8649be929949c9ba792, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerListener: {fileID: 0}
-  audioSource: {fileID: 0}
 --- !u!1 &1060841263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2957,6 +2958,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 136
+  ySpeed: 0
 --- !u!81 &1060841268
 AudioListener:
   m_ObjectHideFlags: 0
