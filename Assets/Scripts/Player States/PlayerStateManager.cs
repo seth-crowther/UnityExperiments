@@ -11,6 +11,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public CharacterController controller;
     public Transform groundCheck;
+    public Transform headCheck;
     public Transform mainCam;
     public LayerMask groundMask;
 

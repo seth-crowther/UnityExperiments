@@ -3,14 +3,16 @@ using UnityEngine;
 public class PlayerMovingState : PlayerBaseState
 {
     // Constants
-    public float speed = 8.0f;
+    public float speed = 16.0f;
     public float turnSmoothTime = 0.1f;
     public float jumpHeight = 10f;
     public float groundDistance = 1.0f;
+    public float headDistance = 0.1f;
     public float gravity = -60f;
 
     // To be referenced
     public bool isGrounded;
+    public bool hasHitHead;
     private float turnSmoothVelocity;
     private float ySpeed;
 
@@ -22,6 +24,7 @@ public class PlayerMovingState : PlayerBaseState
     public override void UpdateState(PlayerStateManager player)
     {
         isGrounded = Physics.CheckSphere(player.groundCheck.position, groundDistance, player.groundMask, QueryTriggerInteraction.Ignore);
+        hasHitHead = Physics.CheckSphere(player.headCheck.position, headDistance, player.groundMask, QueryTriggerInteraction.Ignore);
 
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -40,6 +43,11 @@ public class PlayerMovingState : PlayerBaseState
                 // Vertical speed needed to reach a given height
                 ySpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
+        }
+
+        if (hasHitHead)
+        {
+            ySpeed = -1f;
         }
 
         if (direction.magnitude >= 0.1f) // If there is some direction input
