@@ -14,7 +14,6 @@ public class PlayerMovingState : PlayerBaseState
     public bool isGrounded;
     public bool hasHitHead;
     private float turnSmoothVelocity;
-    private float ySpeed;
 
     public override void EnterState(PlayerStateManager player)
     {
@@ -32,22 +31,22 @@ public class PlayerMovingState : PlayerBaseState
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        ySpeed += gravity * Time.deltaTime;
+        player.ySpeed += gravity * Time.deltaTime;
 
-        if (isGrounded && ySpeed < 0)
+        if (isGrounded && player.ySpeed < 0)
         {
-            ySpeed = -4f;
+            player.ySpeed = -4f;
 
             if (Input.GetButtonDown("Jump"))
             {
                 // Vertical speed needed to reach a given height
-                ySpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                player.ySpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
         }
 
         if (hasHitHead)
         {
-            ySpeed = -1f;
+            player.ySpeed = -1f;
         }
 
         if (direction.magnitude >= 0.1f) // If there is some direction input
@@ -65,6 +64,6 @@ public class PlayerMovingState : PlayerBaseState
             player.controller.Move(movement);
         }
 
-        player.controller.Move(new Vector3(0f, ySpeed, 0f) * Time.deltaTime);
+        player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
     }
 }

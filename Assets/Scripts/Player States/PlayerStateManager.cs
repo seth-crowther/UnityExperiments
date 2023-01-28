@@ -15,6 +15,8 @@ public class PlayerStateManager : MonoBehaviour
     public Transform mainCam;
     public LayerMask groundMask;
 
+    public float ySpeed;
+
     // Start is called before the first frame update
     void Start()
     {

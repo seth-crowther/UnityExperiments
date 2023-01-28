@@ -6,7 +6,6 @@ public class PlayerClimbingState : PlayerBaseState
     private Transform climbing;
 
     public float climbingSpeed = 5.0f;
-    public float ySpeed;
 
     public float speed = 8.0f;
     public float turnSmoothTime = 0.1f;
@@ -15,6 +14,7 @@ public class PlayerClimbingState : PlayerBaseState
     public override void EnterState(PlayerStateManager player)
     {
         climbing = player.climbing;
+        player.ySpeed = 0f;
     }
 
     public override void UpdateState(PlayerStateManager player)
