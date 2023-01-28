@@ -29,18 +29,18 @@ public class AudioTracking : MonoBehaviour
         AdjustAudioAttenuation();
     }
 
-    private void AdjustAudioPan() // Doesn't work!
+    private void AdjustAudioPan()
     {
         cameraForward = new Vector3(mainCam.transform.forward.x, 0f, mainCam.transform.forward.z).normalized;
-        dirToSpeaker = (transform.position - new Vector3(mainCam.transform.position.x, 0f, mainCam.transform.position.z)).normalized;
+        dirToSpeaker = (new Vector3(transform.position.x, 0f, transform.position.z) - new Vector3(mainCam.transform.position.x, 0f, mainCam.transform.position.z)).normalized;
 
         angleToSpeaker = Vector3.SignedAngle(cameraForward, dirToSpeaker, Vector3.up) * Mathf.Deg2Rad;
-        audioSource.panStereo = Mathf.Cos(angleToSpeaker);
+        audioSource.panStereo = Mathf.Sin(angleToSpeaker);
     }
 
-    private void AdjustAudioAttenuation() // Doesn't work!
+    private void AdjustAudioAttenuation()
     {
         playerDist = Vector3.Distance(transform.position, player.position);
-        audioSource.volume = -(1 / range * maxVolume) + maxVolume;
+        audioSource.volume = -(1 / range) * maxVolume * playerDist + maxVolume;
     }
 }
