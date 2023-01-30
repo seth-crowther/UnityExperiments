@@ -21,7 +21,7 @@ public class Ladder : MonoBehaviour
         {
             PlayerStateManager stateMgr = other.GetComponent<PlayerStateManager>();
             stateMgr.climbing = null;
-            stateMgr.ChangeState(stateMgr.movingState);
+            stateMgr.ChangeState(stateMgr.fallingState);
         }
     }
 }

@@ -360,6 +360,7 @@
 "Assets/Scripts/MovingPlatform.cs"
 "Assets/Scripts/Player States/PlayerBaseState.cs"
 "Assets/Scripts/Player States/PlayerClimbingState.cs"
+"Assets/Scripts/Player States/PlayerFallingState.cs"
 "Assets/Scripts/Player States/PlayerJetpackState.cs"
 "Assets/Scripts/Player States/PlayerMovingState.cs"
 "Assets/Scripts/Player States/PlayerStateManager.cs"
