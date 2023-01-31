@@ -19,6 +19,7 @@ public class PlayerMovingState : PlayerBaseState
 
         if (!player.isGrounded)
         {
+            player.ySpeed = 0f;
             player.ChangeState(player.fallingState);
         }
         else

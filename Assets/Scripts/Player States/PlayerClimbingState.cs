@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerClimbingState : PlayerBaseState
 {
     public Transform transform;
-    private Transform climbing;
 
     public float climbingSpeed = 5.0f;
 
@@ -11,10 +10,16 @@ public class PlayerClimbingState : PlayerBaseState
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
+    private Ray moveDirRay;
+    private LayerMask ladder;
+    private Vector3 bottomOfPlayer;
+    public bool isMovingTowardLadder;
+
     public override void EnterState(PlayerStateManager player)
     {
-        climbing = player.climbing;
         player.ySpeed = 0f;
+        ladder = LayerMask.GetMask("Ladder");
+        bottomOfPlayer = player.transform.position - new Vector3(0f, 2f, 0f);
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -35,10 +40,15 @@ public class PlayerClimbingState : PlayerBaseState
 
             player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            Vector3 movement = speed * Time.deltaTime * moveDir.normalized;
+            Vector3 moveDir = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
+            Vector3 movement = speed * Time.deltaTime * moveDir;
             player.controller.Move(movement);
-            player.controller.Move(climbingSpeed * Time.deltaTime * Vector3.Cross(-player.transform.forward, climbing.right).normalized);
+
+            moveDirRay = new Ray(bottomOfPlayer, moveDir);
+            if (Physics.Raycast(moveDirRay, 5f, ladder, QueryTriggerInteraction.Collide))
+            {
+                player.controller.Move(climbingSpeed * Time.deltaTime * Vector3.up);
+            }
         }
     }
 }

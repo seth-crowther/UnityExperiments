@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24250
+  m_Name: pb_Mesh24244
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -963,7 +963,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24372
+  m_Name: pb_Mesh24366
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2150,7 +2150,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24206
+  m_Name: pb_Mesh24196
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2983,7 +2983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3401b1ffa491a8847979dfa5d98efe57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  climbing: {fileID: 0}
   controller: {fileID: 1060841266}
   groundCheck: {fileID: 1943545628}
   headCheck: {fileID: 603554376}
@@ -2991,6 +2990,13 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 136
+  groundDistance: 1
+  headDistance: 0.1
+  walkingSpeed: 16
+  turnSmoothTime: 0.1
+  isGrounded: 0
+  hasHitHead: 0
+  turnSmoothVelocity: 0
   ySpeed: 0
 --- !u!81 &1060841268
 AudioListener:
@@ -3043,7 +3049,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24286
+  m_Name: pb_Mesh24280
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3559,7 +3565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e087e48b90ce3fb4bb2f41e1ab505308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMgr: {fileID: 1060841267}
+  player: {fileID: 1060841267}
 --- !u!65 &1295428349
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3579,7 +3585,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24270
+  m_Name: pb_Mesh24264
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3821,7 +3827,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24338
+  m_Name: pb_Mesh24332
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

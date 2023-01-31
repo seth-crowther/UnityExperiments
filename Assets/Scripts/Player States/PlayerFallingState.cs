@@ -8,7 +8,7 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        player.ySpeed = 0f;
+        
     }
 
     public override void UpdateState(PlayerStateManager player)

@@ -10,8 +10,6 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerJetpackState jetpackState;
     public PlayerFallingState fallingState; 
 
-    public Transform climbing;
-
     public CharacterController controller;
     public Transform groundCheck;
     public Transform headCheck;
