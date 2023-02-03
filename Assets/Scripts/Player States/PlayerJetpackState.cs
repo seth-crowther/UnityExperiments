@@ -42,14 +42,21 @@ public class PlayerJetpackState : PlayerBaseState
             player.ySpeed = -1f;
         }
 
+        if (player.ySpeed < 0)
+        {
+            // Once player hits the ground, change player state to moving state
+            if (player.isGrounded)
+            {
+                player.ChangeState(player.movingState);
+            }
+            else
+            {
+                player.ChangeState(player.fallingState);
+            }
+        }
+
         // Adjusts y position based on gravity
         player.ySpeed += gravity * Time.deltaTime;
         player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
-
-        // Once player hits the ground, change player state to moving state
-        if (player.isGrounded && player.ySpeed < 0)
-        {
-            player.ChangeState(player.movingState);
-        }
     }
 }

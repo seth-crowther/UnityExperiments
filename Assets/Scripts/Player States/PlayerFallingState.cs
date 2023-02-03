@@ -1,14 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerFallingState : PlayerBaseState
 {
     public float gravity = -60f;
+    private float maximumHoverHeight;
+    private float minimumHoverHeight;
+    private readonly float hoverDistance = 2f;
+
+    private readonly float maxHoverTime = 2f;
+    private float elapsedHoverTime;
+    private readonly float hoverYSpeedChangeRange = 0.75f;
 
     public override void EnterState(PlayerStateManager player)
     {
-        
+        elapsedHoverTime = 0f;
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -33,8 +39,41 @@ public class PlayerFallingState : PlayerBaseState
             player.controller.Move(movement);
         }
 
-        // Adjusts y position based on gravity
-        player.ySpeed += gravity * Time.deltaTime;
+        // If jump button is held and max hover time hasn't been exceeded, execute hover logic
+        // Allows player to hover slightly by using jetpack
+        if (Input.GetButton("Jump") && elapsedHoverTime < maxHoverTime)
+        {
+            // If hover is just about to be initiated, set the range of the hover
+            if (elapsedHoverTime == 0f)
+            {
+                maximumHoverHeight = player.transform.position.y;
+                minimumHoverHeight = maximumHoverHeight - hoverDistance;
+            }
+
+            elapsedHoverTime += Time.deltaTime;
+
+            // Hover movement logic 
+            player.ySpeed += UnityEngine.Random.Range(-hoverYSpeedChangeRange, hoverYSpeedChangeRange);
+            // If y position is about to fall below min height or rise above max height
+            // Reset y speed and make sure ySpeed is changed to stay within hover range
+            float yPosNextFrame = player.transform.position.y + player.ySpeed * Time.deltaTime;
+            if (yPosNextFrame < minimumHoverHeight)
+            {
+                player.ySpeed = 0f;
+                player.ySpeed += UnityEngine.Random.Range(0f, hoverYSpeedChangeRange);
+            }
+            else if (yPosNextFrame > maximumHoverHeight)
+            {
+                player.ySpeed = 0f;
+                player.ySpeed += UnityEngine.Random.Range(-hoverYSpeedChangeRange, 0f);
+            }
+        }
+        else
+        {
+            // Adjusts y position based on gravity
+            player.ySpeed += gravity * Time.deltaTime;
+        }
+
         player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
 
         // Once player hits the ground, change player state to moving state
