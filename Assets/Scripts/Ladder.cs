@@ -6,6 +6,7 @@ public class Ladder : MonoBehaviour
 {
     public PlayerStateManager player;
 
+    // When player enters the ladder trigger, change player state to climbing
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -14,6 +15,8 @@ public class Ladder : MonoBehaviour
         }
     }
 
+
+    // When player leaves the ladder trigger, change player state to falling
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

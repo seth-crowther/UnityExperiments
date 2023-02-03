@@ -27,7 +27,6 @@ public class PlayerClimbingState : PlayerBaseState
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= 0.1f) // If there is some direction input
@@ -38,15 +37,17 @@ public class PlayerClimbingState : PlayerBaseState
             // Smooths turning angle so the target angle is reached in turnSmoothTime seconds
             float angle = Mathf.SmoothDampAngle(player.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
+            // Rotating player towards targetAngle slowly, and moving based on direction vector
             player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
-            Vector3 movement = speed * Time.deltaTime * moveDir;
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            Vector3 movement = player.walkingSpeed * Time.deltaTime * moveDir.normalized;
             player.controller.Move(movement);
 
+            // Raycast to determine whether the player is looking towards the ladder
             moveDirRay = new Ray(bottomOfPlayer, moveDir);
             if (Physics.Raycast(moveDirRay, 5f, ladder, QueryTriggerInteraction.Collide))
             {
+                // If the player is looking directly at the ladder and moving, the player will move up the ladder
                 player.controller.Move(climbingSpeed * Time.deltaTime * Vector3.up);
             }
         }
