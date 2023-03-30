@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Player States\PlayerMovingState.cs" />
     <Compile Include="Assets\Scripts\WaypointPath.cs" />
     <Compile Include="Assets\Scripts\MovingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Player States\PlayerHoverState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

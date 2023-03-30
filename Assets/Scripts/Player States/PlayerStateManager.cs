@@ -9,6 +9,7 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerClimbingState climbingState; // Player state when player is climbing a climable object
     public PlayerJetpackState jetpackState; // Player state when player is jumping with the jetpack
     public PlayerFallingState fallingState; // Player state when player is falling under gravity
+    public PlayerHoverState hoverState;
 
     public CharacterController controller; // Reference to the player's character controller component
     public Transform groundCheck; // Empty object that is used to check if player is grounded
@@ -34,6 +35,7 @@ public class PlayerStateManager : MonoBehaviour
         climbingState = new PlayerClimbingState();
         jetpackState = new PlayerJetpackState();
         fallingState = new PlayerFallingState();
+        hoverState = new PlayerHoverState();
 
         currentState = fallingState;
         currentState.EnterState(this);
@@ -51,6 +53,29 @@ public class PlayerStateManager : MonoBehaviour
 
         // Updates player based on the current player state's update method
         currentState.UpdateState(this);
+    }
+
+    public void HorizontalMovement()
+    {
+        // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f) // If there is some direction input
+        {
+            // Calculating desired angle for character to face forward
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCam.eulerAngles.y;
+
+            // Smooths turning angle so the target angle is reached in turnSmoothTime seconds
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+            // Rotating player towards targetAngle slowly, and moving based on direction vector
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            Vector3 movement = walkingSpeed * Time.deltaTime * moveDir.normalized;
+            controller.Move(movement);
+        }
     }
 
     // Simple function to switch states

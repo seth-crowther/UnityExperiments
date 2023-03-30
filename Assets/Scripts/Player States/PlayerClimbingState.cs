@@ -24,6 +24,8 @@ public class PlayerClimbingState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
+        // Horizontal movement on a ladder is slightly different to general horizontal movement so base.UpdateState() can't be used easily
+
         // Get horizontal and vertical input. "GetAxisRaw" means no input smoothing.
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
