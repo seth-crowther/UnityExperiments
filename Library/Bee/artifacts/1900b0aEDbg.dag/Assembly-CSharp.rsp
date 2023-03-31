@@ -357,6 +357,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/AudioTracking.cs"
 "Assets/Scripts/Ladder.cs"
+"Assets/Scripts/MouseLook.cs"
 "Assets/Scripts/MovingPlatform.cs"
 "Assets/Scripts/Player States/PlayerBaseState.cs"
 "Assets/Scripts/Player States/PlayerClimbingState.cs"

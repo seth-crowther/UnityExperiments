@@ -62,11 +62,12 @@
     <Compile Include="Assets\Scripts\Player States\PlayerFallingState.cs" />
     <Compile Include="Assets\Scripts\Player States\PlayerJetpackState.cs" />
     <Compile Include="Assets\Scripts\Ladder.cs" />
+    <Compile Include="Assets\Scripts\Player States\PlayerHoverState.cs" />
     <Compile Include="Assets\Scripts\Player States\PlayerStateManager.cs" />
     <Compile Include="Assets\Scripts\Player States\PlayerMovingState.cs" />
     <Compile Include="Assets\Scripts\WaypointPath.cs" />
     <Compile Include="Assets\Scripts\MovingPlatform.cs" />
-    <Compile Include="Assets\Scripts\Player States\PlayerHoverState.cs" />
+    <Compile Include="Assets\Scripts\MouseLook.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
