@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float sensitivity = 2.0f;
+    public Transform player;
+
+    private void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        float horizontal = Input.GetAxis("Mouse X");
+        float vertical = Input.GetAxis("Mouse Y");
+        Vector3 rotation = new Vector3(-vertical, horizontal, 0) * sensitivity;
+
+        transform.Rotate(rotation);
     }
 }
