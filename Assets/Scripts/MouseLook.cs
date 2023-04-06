@@ -6,22 +6,45 @@ public class MouseLook : MonoBehaviour
 {
     public float sensitivity = 2.0f;
     public Transform player;
-    public Transform mainCam;
-    public Vector3 playerOffset;
+    public Camera mainCam;
 
-    void Start()
+    private float mainCamFOV;
+    private float maxAngle;
+
+    private void Start()
     {
-        playerOffset = transform.position - player.position;    
+        mainCamFOV = mainCam.fieldOfView;
+        maxAngle = mainCamFOV;
+        transform.eulerAngles = Vector3.zero;
     }
+
     void Update()
     {
         float horizontal = Input.GetAxis("Mouse X");
         float vertical = Input.GetAxis("Mouse Y");
-        //Vector3 rotation = new Vector3(-vertical, horizontal, 0) * sensitivity;
 
-        transform.Rotate(new Vector3(-vertical, 0, 0) * sensitivity);
+        float verticalAngleToRotate = -vertical * sensitivity;
+
+        float nextAngle = transform.eulerAngles.x + verticalAngleToRotate;
+        if (nextAngle > 180)
+        {
+            nextAngle -= 360;
+        }
+
+        // Clamping player's vertical look rotation
+        if (nextAngle < -maxAngle)
+        {
+            transform.eulerAngles = new Vector3(-maxAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+        else if (nextAngle > maxAngle)
+        {
+            transform.eulerAngles = new Vector3(maxAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+        else
+        {
+            transform.RotateAround(transform.position, mainCam.transform.right, verticalAngleToRotate);
+        }
+
         transform.RotateAround(player.position, player.up, horizontal * sensitivity);
-
-        //transform.position = player.position + playerOffset;
     }
 }
