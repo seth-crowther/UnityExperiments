@@ -11,14 +11,14 @@ public class PlayerClimbingState : PlayerBaseState
     private float turnSmoothVelocity;
 
     private Ray moveDirRay;
-    private LayerMask ladder;
+    private LayerMask obstacles;
     private Vector3 bottomOfPlayer;
     public bool isMovingTowardLadder;
 
     public override void EnterState(PlayerStateManager player)
     {
         player.ySpeed = 0f;
-        ladder = LayerMask.GetMask("Ladder");
+        obstacles = LayerMask.GetMask("Obstacles");
         bottomOfPlayer = player.transform.position - new Vector3(0f, 2f, 0f);
     }
 
@@ -47,7 +47,7 @@ public class PlayerClimbingState : PlayerBaseState
 
             // Raycast to determine whether the player is looking towards the ladder
             moveDirRay = new Ray(bottomOfPlayer, moveDir);
-            if (Physics.Raycast(moveDirRay, 5f, ladder, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(moveDirRay, 5f, obstacles, QueryTriggerInteraction.Collide))
             {
                 // If the player is looking directly at the ladder and moving, the player will move up the ladder
                 player.controller.Move(climbingSpeed * Time.deltaTime * Vector3.up);

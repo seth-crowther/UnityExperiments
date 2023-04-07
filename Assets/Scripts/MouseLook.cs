@@ -6,15 +6,16 @@ public class MouseLook : MonoBehaviour
 {
     public float sensitivity = 2.0f;
     public Transform player;
-    public Camera mainCam;
 
+    private Camera mainCam;
     private float mainCamFOV;
     private float maxAngle;
 
     private void Start()
     {
+        mainCam = Camera.main;
         mainCamFOV = mainCam.fieldOfView;
-        maxAngle = mainCamFOV;
+        maxAngle = mainCamFOV + 10f; 
         transform.eulerAngles = Vector3.zero;
     }
 

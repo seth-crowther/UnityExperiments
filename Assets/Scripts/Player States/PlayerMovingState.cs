@@ -5,7 +5,6 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        Debug.Log("Entering moving state");
         player.ySpeed = -20f;
 
         // Reset hover time when player is grounded
