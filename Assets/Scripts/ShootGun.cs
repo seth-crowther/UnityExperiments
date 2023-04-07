@@ -13,7 +13,7 @@ public class ShootGun : MonoBehaviour
     private Vector3 shootDir;
     private Vector3 aimPoint;
     private float aimDistance = 1000f;
-    private float shootForce = 100f;
+    private float shootForce = 50f;
 
     void Start()
     {

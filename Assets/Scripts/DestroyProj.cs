@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class DestroyProj : MonoBehaviour
 {
-    void Update()
+    private float timeAlive;
+    private float lifespan;
+
+    void Start()
     {
-        
+        timeAlive = 0f;
+        lifespan = 3f;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void Update()
     {
-        if (collision.collider.gameObject.layer == 3)
+        timeAlive += Time.deltaTime;
+        if (timeAlive > lifespan)
         {
             Destroy(gameObject);
         }
