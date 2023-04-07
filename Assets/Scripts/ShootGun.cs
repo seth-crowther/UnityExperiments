@@ -28,13 +28,11 @@ public class ShootGun : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1000f, allowHit))
         {
-            player.SetLookPoint(hit.point);
             shootDir = (hit.point - transform.position).normalized;
         }
         else
         {
             aimPoint = mainCam.transform.position + (mainCam.transform.forward * aimDistance);
-            player.SetLookPoint(aimPoint);
             shootDir = (aimPoint - transform.position).normalized;
         }
 

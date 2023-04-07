@@ -10,7 +10,6 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        Debug.Log("Entering jetpack state");
         player.ySpeed = Mathf.Sqrt(jetpackJumpHeight * -2f * gravity);
     }
 

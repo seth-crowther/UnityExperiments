@@ -31,7 +31,6 @@ public class PlayerHoverState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        Debug.Log("Entering hover state");
         // Set the range of the hover
         maximumHoverHeight = player.transform.position.y;
         minimumHoverHeight = maximumHoverHeight - hoverDistance;

@@ -19,7 +19,7 @@ public class PlayerStateManager : MonoBehaviour
     public float groundDistance = 1.0f; // Radius of sphere of grounded check using groundCheck
     public float headDistance = 0.1f; // Radius of sphere of hitting head check using headCheck
     public float walkingSpeed = 16.0f; // Walking speed of the player
-    public float turnSmoothTime = 0.1f; // Time to take the player to turn to face the camera's direction
+    public float turnSmoothTime = 0.1f; // Time to take the player to turn to face desired direction
 
     public bool isGrounded; // Boolean that updates to indicate whether or not the player is grounded
     public bool hasHitHead; // Boolean that updates to indicate whether ot not the player has hit their head
@@ -29,9 +29,9 @@ public class PlayerStateManager : MonoBehaviour
     public Camera mainCam;
 
     private bool shootingState = false;
-    private Vector3 lookPoint;
     private float timeInShootingState;
-    private float shootingStateTime = 4f;
+    private float shootingStateTime = 2f;
+    private float turnToAimSpeed = 1.0f;
 
     // Initialising player states and defaulting to the falling state
     void Start()
@@ -46,10 +46,6 @@ public class PlayerStateManager : MonoBehaviour
 
         currentState = fallingState;
         currentState.EnterState(this);
-    }
-    public void SetLookPoint(Vector3 value)
-    {
-        lookPoint = value;
     }
 
     public void EnterShootingState()
@@ -87,11 +83,11 @@ public class PlayerStateManager : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
         if (!shootingState)
         {
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-            if (direction.magnitude >= 0.1f) // If there is some direction input
+            if (direction.magnitude >= 0.1f)
             {
                 // Calculating desired angle for character to face forward
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
@@ -107,8 +103,10 @@ public class PlayerStateManager : MonoBehaviour
         }
         else
         {
-            transform.forward = mainCam.transform.forward;
-            Vector3 moveDir = ((horizontal * mainCam.transform.right) + (vertical * transform.forward)).normalized;
+            float mainCamYRot = mainCam.transform.eulerAngles.y;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, mainCamYRot, 0), timeInShootingState / turnToAimSpeed);
+            //transform.forward = new Vector3(mainCam.transform.forward.x, 0, mainCam.transform.forward.z);
+            Vector3 moveDir = ((horizontal * mainCam.transform.right) + (vertical * mainCam.transform.forward)).normalized;
             controller.Move(moveDir * walkingSpeed * Time.deltaTime);
         }
     }
