@@ -34,7 +34,7 @@ public class PlayerClimbingState : PlayerBaseState
         if (direction.magnitude >= 0.1f) // If there is some direction input
         {
             // Calculating desired angle for character to face forward
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + player.mainCam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + player.mainCam.transform.eulerAngles.y;
 
             // Smooths turning angle so the target angle is reached in turnSmoothTime seconds
             float angle = Mathf.SmoothDampAngle(player.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);

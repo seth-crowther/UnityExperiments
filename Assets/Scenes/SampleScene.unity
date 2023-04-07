@@ -336,6 +336,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   grenade: {fileID: 2852794876836899505, guid: 4b3c37e21e9dadc488d724d85f077d35, type: 3}
+  player: {fileID: 647495695}
 --- !u!1 &173703358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,7 +2061,6 @@ MonoBehaviour:
   controller: {fileID: 1060841266}
   groundCheck: {fileID: 1943545628}
   headCheck: {fileID: 603554376}
-  mainCam: {fileID: 963194228}
   groundMask:
     serializedVersion: 2
     m_Bits: 136
@@ -2072,6 +2072,7 @@ MonoBehaviour:
   hasHitHead: 0
   turnSmoothVelocity: 0
   ySpeed: 0
+  mainCam: {fileID: 963194228}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
