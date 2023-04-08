@@ -335,7 +335,7 @@ MonoBehaviour:
   allowHit:
     serializedVersion: 2
     m_Bits: 8
-  grenade: {fileID: 2852794876836899505, guid: 4b3c37e21e9dadc488d724d85f077d35, type: 3}
+  grenade: {fileID: 336414405503211641, guid: 58cc988e7e6986f47bbe852dc14a82bf, type: 3}
   player: {fileID: 647495695}
 --- !u!1 &173703358
 GameObject:
@@ -4005,7 +4005,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973865063}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.93750006, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
