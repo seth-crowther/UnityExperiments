@@ -16,9 +16,26 @@ public class PASAudio : MonoBehaviour
     private float playerDist; // Distance of the player from the speaker
     private float maxVolume; // Max volume of audio produced by the speaker
 
+    public ComboCounter comboCounter;
     private readonly int bpm = 100;
     private const float onBeatThreshold = 0.15f;
     private float period;
+    private float timeSinceLastHit = 0f;
+
+    public float GetTimeSinceLastHit()
+    {
+        return timeSinceLastHit;
+    }
+
+    public float GetPeriod()
+    {
+        return period;
+    }
+
+    public float GetOnBeatThreshold()
+    {
+        return onBeatThreshold;
+    }
 
     void Start()
     {
@@ -34,6 +51,7 @@ public class PASAudio : MonoBehaviour
     {
         AdjustAudioPan();
         AdjustAudioAttenuation();
+        timeSinceLastHit += Time.deltaTime;
     }
 
     // Adjusts which ear the speaker plays audio through depending on the direction of the camera
@@ -57,6 +75,15 @@ public class PASAudio : MonoBehaviour
     public bool OnBeat()
     {
         float distFromBeat = Time.realtimeSinceStartup % period;
-        return distFromBeat < onBeatThreshold || distFromBeat > period - onBeatThreshold;
+        if (distFromBeat < onBeatThreshold || distFromBeat > period - onBeatThreshold)
+        {
+            timeSinceLastHit = 0f;
+            comboCounter.AddCombo();
+            return true;
+        }
+
+        // If beat is missed, reset combo counter
+        comboCounter.SetCombo(0);
+        return false;
     }
 }
