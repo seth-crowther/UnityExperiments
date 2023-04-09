@@ -33,6 +33,11 @@ public class PlayerStateManager : MonoBehaviour
     private float shootingStateTime = 2f;
     private float turnToAimSpeed = 1.0f;
 
+    public PlayerBaseState GetCurrentState()
+    {
+        return currentState;
+    }
+
     // Initialising player states and defaulting to the falling state
     void Start()
     {
@@ -46,12 +51,6 @@ public class PlayerStateManager : MonoBehaviour
 
         currentState = fallingState;
         currentState.EnterState(this);
-    }
-
-    public void EnterShootingState()
-    {
-        timeInShootingState = 0f;
-        shootingState = true;
     }
 
     void Update()
@@ -75,6 +74,12 @@ public class PlayerStateManager : MonoBehaviour
         {
             shootingState = false;
         }
+    }
+
+    public void EnterShootingState()
+    {
+        timeInShootingState = 0f;
+        shootingState = true;
     }
 
     public void HorizontalMovement()
