@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// Abstract player state class that all player states inherit from
+// Player state class that all player states inherit from
 public abstract class PlayerBaseState
 {
     public abstract void EnterState(PlayerStateManager player);
@@ -8,4 +8,6 @@ public abstract class PlayerBaseState
     {
         player.HorizontalMovement();
     }
+
+    public abstract void ExitState(PlayerStateManager player);
 }

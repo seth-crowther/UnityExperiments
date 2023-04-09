@@ -34,6 +34,7 @@ public class PlayerHoverState : PlayerBaseState
         // Set the range of the hover
         maximumHoverHeight = player.transform.position.y;
         minimumHoverHeight = maximumHoverHeight - hoverDistance;
+        player.jetpackParticles.PlayParticles();
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -73,5 +74,10 @@ public class PlayerHoverState : PlayerBaseState
         }
 
         player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+    }
+
+    public override void ExitState(PlayerStateManager player)
+    {
+        player.jetpackParticles.StopParticles();
     }
 }

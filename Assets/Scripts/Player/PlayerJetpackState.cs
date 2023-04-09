@@ -40,4 +40,9 @@ public class PlayerJetpackState : PlayerBaseState
         player.ySpeed += gravity * Time.deltaTime;
         player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
     }
+
+    public override void ExitState(PlayerStateManager player)
+    {
+        
+    }
 }

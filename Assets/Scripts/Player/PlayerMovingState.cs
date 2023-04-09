@@ -35,4 +35,9 @@ public class PlayerMovingState : PlayerBaseState
         // Adjusting players y velocity based on 
         player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
     }
+
+    public override void ExitState(PlayerStateManager player)
+    {
+        
+    }
 }

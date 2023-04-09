@@ -11,10 +11,12 @@ public class JetpackRings : MonoBehaviour
     public GameObject jumpParticles;
     public PlayerStateManager player;
 
-    private ParticleSystem right;
-    private ParticleSystem left;
-    private ParticleSystem.EmissionModule rightEmission;
-    private ParticleSystem.EmissionModule leftEmission;
+    private ParticleSystem right1;
+    private ParticleSystem left1;
+    private ParticleSystem right2;
+    private ParticleSystem left2;
+
+    private bool whichParticleEffect = true;
 
     void Start()
     {
@@ -23,30 +25,48 @@ public class JetpackRings : MonoBehaviour
         rightJetPos = transform.position + new Vector3(0.6f, -1.2f, 0f);
         leftJetPos = transform.position + new Vector3(-0.6f, -1.2f, 0f);
 
-        GameObject r = Instantiate(jumpParticles, rightJetPos, particleStartRotation, transform);
-        GameObject l = Instantiate(jumpParticles, leftJetPos, particleStartRotation, transform);
-        right = r.GetComponent<ParticleSystem>();
-        left = l.GetComponent<ParticleSystem>();
+        GameObject r1 = Instantiate(jumpParticles, rightJetPos, particleStartRotation, transform);
+        GameObject l1 = Instantiate(jumpParticles, leftJetPos, particleStartRotation, transform);
+        GameObject r2 = Instantiate(jumpParticles, rightJetPos, particleStartRotation, transform);
+        GameObject l2 = Instantiate(jumpParticles, leftJetPos, particleStartRotation, transform);
 
-        rightEmission = right.emission;
-        leftEmission = left.emission;
+        right1 = r1.GetComponent<ParticleSystem>();
+        left1 = l1.GetComponent<ParticleSystem>();
+        right2 = r2.GetComponent<ParticleSystem>();
+        left2 = l2.GetComponent<ParticleSystem>();
 
-        right.Play();
-        left.Play();
+        right1.Stop();
+        left1.Stop();
+        right2.Stop();
+        left2.Stop();
     }
 
-    void Update()
+    public void PlayParticles()
     {
-        if (player.GetCurrentState() == player.hoverState)
+        if (whichParticleEffect)
         {
-            
-            rightEmission.enabled = true;
-            leftEmission.enabled = true;
+            right1.Play();
+            left1.Play();
         }
         else
         {
-            rightEmission.enabled = false;
-            leftEmission.enabled = false;
+            right2.Play();
+            left2.Play();
         }
+    }
+
+    public void StopParticles()
+    {
+        if (whichParticleEffect)
+        {
+            right1.Stop();
+            left1.Stop();
+        }
+        else
+        {
+            right2.Stop();
+            left2.Stop();
+        }
+        whichParticleEffect = !whichParticleEffect;
     }
 }

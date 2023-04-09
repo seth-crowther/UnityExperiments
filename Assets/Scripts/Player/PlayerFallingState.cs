@@ -34,4 +34,9 @@ public class PlayerFallingState : PlayerBaseState
             player.ChangeState(player.movingState);
         }
     }
+
+    public override void ExitState(PlayerStateManager player)
+    {
+        
+    }
 }

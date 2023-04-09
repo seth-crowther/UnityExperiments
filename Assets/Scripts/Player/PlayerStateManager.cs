@@ -33,6 +33,8 @@ public class PlayerStateManager : MonoBehaviour
     private float shootingStateTime = 2f;
     private float turnToAimSpeed = 1.0f;
 
+    public JetpackRings jetpackParticles;
+
     public PlayerBaseState GetCurrentState()
     {
         return currentState;
@@ -119,6 +121,7 @@ public class PlayerStateManager : MonoBehaviour
     // Simple function to switch states
     public void ChangeState(PlayerBaseState newState)
     {
+        currentState.ExitState(this);
         currentState = newState;
         currentState.EnterState(this);
     }

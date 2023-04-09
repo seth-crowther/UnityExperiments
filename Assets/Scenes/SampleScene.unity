@@ -1817,6 +1817,7 @@ MonoBehaviour:
   turnSmoothVelocity: 0
   ySpeed: 0
   mainCam: {fileID: 963194228}
+  jetpackParticles: {fileID: 344159584}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
