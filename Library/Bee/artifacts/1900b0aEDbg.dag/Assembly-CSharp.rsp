@@ -373,6 +373,7 @@
 "Assets/Scripts/Setup.cs"
 "Assets/Scripts/UI/AmmoCount.cs"
 "Assets/Scripts/UI/ComboCounter.cs"
+"Assets/Scripts/UI/FPSCounter.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"
