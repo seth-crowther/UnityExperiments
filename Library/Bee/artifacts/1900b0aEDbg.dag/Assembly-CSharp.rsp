@@ -367,6 +367,7 @@
 "Assets/Scripts/Player/PlayerClimbingState.cs"
 "Assets/Scripts/Player/PlayerFallingState.cs"
 "Assets/Scripts/Player/PlayerHoverState.cs"
+"Assets/Scripts/Player/PlayerIdleState.cs"
 "Assets/Scripts/Player/PlayerJetpackState.cs"
 "Assets/Scripts/Player/PlayerMovingState.cs"
 "Assets/Scripts/Player/PlayerStateManager.cs"

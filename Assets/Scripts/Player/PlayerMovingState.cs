@@ -6,14 +6,13 @@ public class PlayerMovingState : PlayerBaseState
     public override void EnterState(PlayerStateManager player)
     {
         player.ySpeed = -20f;
-
-        // Reset hover time when player is grounded
-        player.hoverState.SetHoverComplete(false);
-        player.hoverState.SetElapsedHoverTime(0f);
+        player.animator.Play("walking");
     }
 
     public override void UpdateState(PlayerStateManager player)
     {
+        base.UpdateState(player);
+
         // If the player isn't grounded, default to the falling state
         if (!player.isGrounded)
         {
@@ -30,7 +29,11 @@ public class PlayerMovingState : PlayerBaseState
             }
         }
 
-        base.UpdateState(player);
+        // If no direction buttons pressed, enter idle state
+        if (Input.GetAxisRaw("Horizontal") == 0f & Input.GetAxisRaw("Vertical") == 0f)
+        {
+            player.ChangeState(player.idleState);
+        }
 
         // Adjusting players y velocity based on 
         player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);

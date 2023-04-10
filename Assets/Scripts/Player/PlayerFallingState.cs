@@ -31,7 +31,7 @@ public class PlayerFallingState : PlayerBaseState
         // Once player hits the ground, change player state to moving state
         if (player.isGrounded && player.ySpeed < 0)
         {
-            player.ChangeState(player.movingState);
+            player.ChangeState(player.idleState);
         }
     }
 

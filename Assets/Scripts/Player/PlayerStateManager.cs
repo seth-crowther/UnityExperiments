@@ -10,6 +10,7 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerJetpackState jetpackState; // Player state when player is jumping with the jetpack
     public PlayerFallingState fallingState; // Player state when player is falling under gravity
     public PlayerHoverState hoverState; // Player state when player is hovering with the jetpack
+    public PlayerIdleState idleState;
 
     public CharacterController controller; // Reference to the player's character controller component
     public Transform groundCheck; // Empty object that is used to check if player is grounded
@@ -34,6 +35,7 @@ public class PlayerStateManager : MonoBehaviour
     private float turnToAimSpeed = 1.0f;
 
     public JetpackRings jetpackParticles;
+    public Animator animator;
 
     public PlayerBaseState GetCurrentState()
     {
@@ -50,8 +52,9 @@ public class PlayerStateManager : MonoBehaviour
         jetpackState = new PlayerJetpackState();
         fallingState = new PlayerFallingState();
         hoverState = new PlayerHoverState();
+        idleState = new PlayerIdleState();
 
-        currentState = fallingState;
+        currentState = idleState;
         currentState.EnterState(this);
     }
 
@@ -112,9 +115,12 @@ public class PlayerStateManager : MonoBehaviour
         {
             float mainCamYRot = mainCam.transform.eulerAngles.y;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, mainCamYRot, 0), timeInShootingState / turnToAimSpeed);
-            //transform.forward = new Vector3(mainCam.transform.forward.x, 0, mainCam.transform.forward.z);
-            Vector3 moveDir = ((horizontal * mainCam.transform.right) + (vertical * mainCam.transform.forward)).normalized;
-            controller.Move(moveDir * walkingSpeed * Time.deltaTime);
+
+            if (direction.magnitude >= 0.1f)
+            {
+                Vector3 moveDir = ((horizontal * mainCam.transform.right) + (vertical * mainCam.transform.forward)).normalized;
+                controller.Move(moveDir * walkingSpeed * Time.deltaTime);
+            }
         }
     }
 
