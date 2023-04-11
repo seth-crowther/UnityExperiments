@@ -41,15 +41,6 @@ public class PlayerHoverState : PlayerBaseState
     {
         base.UpdateState(player);
 
-        if (player.GetShootingState())
-        {
-            player.animator.Play("idleAiming");
-        }
-        else
-        {
-            player.animator.Play("idle");
-        }
-
         // If you let go of Space, enter falling state
         if (!Input.GetButton("Jump"))
         {

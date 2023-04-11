@@ -15,15 +15,6 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
-        if (player.GetShootingState())
-        {
-            player.animator.Play("idleAiming");
-        }
-        else
-        {
-            player.animator.Play("idle");
-        }
-
         base.UpdateState(player);
 
         // If player hits head on an object while jumping, y velocity is reset

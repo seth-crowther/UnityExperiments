@@ -9,21 +9,12 @@ public class PlayerIdleState : PlayerBaseState
         // Reset hover time when player is grounded
         player.hoverState.SetHoverComplete(false);
         player.hoverState.SetElapsedHoverTime(0f);
-        player.animator.Play("idle");
+        player.animator.SetBool("isMoving", false);
     }
 
     public override void UpdateState(PlayerStateManager player)
     {
         base.UpdateState(player);
-
-        if (player.GetShootingState())
-        {
-            player.animator.Play("idleAiming");
-        }
-        else
-        {
-            player.animator.Play("idle");
-        }
 
         // If the player isn't grounded, default to the falling state
         if (!player.isGrounded)

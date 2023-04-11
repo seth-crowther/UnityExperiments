@@ -8,14 +8,14 @@ public class PlayerMovingState : PlayerBaseState
     public override void EnterState(PlayerStateManager player)
     {
         player.ySpeed = -20f;
-        player.animator.Play("walking");
+        player.animator.SetBool("isMoving", true);
     }
 
     public override void UpdateState(PlayerStateManager player)
     {
-        CalculateAnimation(player);
-
         base.UpdateState(player);
+
+        CalculateAnimation(player);
 
         // If the player isn't grounded, default to the falling state
         if (!player.isGrounded)
@@ -59,26 +59,20 @@ public class PlayerMovingState : PlayerBaseState
 
     public void CalculateAnimation(PlayerStateManager player)
     {
-        player.animator.speed = 1f;
-
         if (player.GetShootingState())
         {
             if (player.inputDirection.x > 0)
             {
-                player.animator.Play("strafeRight");
+                player.animator.SetInteger("strafe", 2);
             }
             else if (player.inputDirection.x < 0)
             {
-                player.animator.Play("strafeLeft");
+                player.animator.SetInteger("strafe", 0);
             }
             else
             {
-                player.animator.Play("walkingAiming");
+                player.animator.SetInteger("strafe", 1);
             }
-        }
-        else
-        {
-            player.animator.Play("walking");
         }
     }
 }

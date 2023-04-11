@@ -83,6 +83,7 @@ public class PlayerStateManager : MonoBehaviour
         if (timeInShootingState > shootingStateTime)
         {
             shootingState = false;
+            animator.SetBool("isShooting", shootingState);
         }
     }
 
@@ -90,6 +91,7 @@ public class PlayerStateManager : MonoBehaviour
     {
         timeInShootingState = 0f;
         shootingState = true;
+        animator.SetBool("isShooting", shootingState);
     }
 
     public void HorizontalMovement()
@@ -102,7 +104,7 @@ public class PlayerStateManager : MonoBehaviour
 
         if (!shootingState)
         {
-            if (inputDirection.magnitude >= 0.1f)
+            if (inputDirection != Vector3.zero)
             {
                 // Calculating desired angle for character to face forward
                 float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
@@ -121,7 +123,7 @@ public class PlayerStateManager : MonoBehaviour
             float mainCamYRot = mainCam.transform.eulerAngles.y;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, mainCamYRot, 0), timeInShootingState / turnToAimSpeed);
 
-            if (inputDirection.magnitude >= 0.1f)
+            if (inputDirection != Vector3.zero)
             {
                 moveDir = ((horizontal * mainCam.transform.right) + (vertical * mainCam.transform.forward)).normalized;
                 controller.Move(moveDir * walkingSpeed * Time.deltaTime);
