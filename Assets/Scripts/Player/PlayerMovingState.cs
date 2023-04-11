@@ -11,6 +11,15 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
+        if (player.GetShootingState())
+        {
+            player.animator.Play("walkingAiming");
+        }
+        else
+        {
+            player.animator.Play("walking");
+        }
+
         base.UpdateState(player);
 
         // If the player isn't grounded, default to the falling state
@@ -30,6 +39,7 @@ public class PlayerMovingState : PlayerBaseState
         }
 
         // If no direction buttons pressed, enter idle state
+        // Important it's a single "&" so both statements are evaluated
         if (Input.GetAxisRaw("Horizontal") == 0f & Input.GetAxisRaw("Vertical") == 0f)
         {
             player.ChangeState(player.idleState);

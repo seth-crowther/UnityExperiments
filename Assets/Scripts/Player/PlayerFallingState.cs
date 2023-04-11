@@ -12,6 +12,15 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
+        if (player.GetShootingState())
+        {
+            player.animator.Play("idleAiming");
+        }
+        else
+        {
+            player.animator.Play("idle");
+        }
+
         base.UpdateState(player);
 
         // If jump button is held and a hover hasn't been completed, change to hover state

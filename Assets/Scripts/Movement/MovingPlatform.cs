@@ -61,7 +61,7 @@ public class MovingPlatform : MonoBehaviour
     // This means any changes to the transform of the platform will be copied onto the player
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.layer == 6 || other.gameObject.layer == 8)
         {
             other.transform.SetParent(transform);
         }
@@ -70,7 +70,7 @@ public class MovingPlatform : MonoBehaviour
     // Player must become unparented upon leaving the platform
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.layer == 6 || other.gameObject.layer == 8)
         {
             other.transform.SetParent(null);
         }

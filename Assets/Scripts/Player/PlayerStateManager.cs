@@ -42,6 +42,11 @@ public class PlayerStateManager : MonoBehaviour
         return currentState;
     }
 
+    public bool GetShootingState()
+    {
+        return shootingState;
+    }
+
     // Initialising player states and defaulting to the falling state
     void Start()
     {

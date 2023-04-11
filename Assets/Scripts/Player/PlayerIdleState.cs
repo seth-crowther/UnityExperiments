@@ -14,6 +14,15 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
+        if (player.GetShootingState())
+        {
+            player.animator.Play("idleAiming");
+        }
+        else
+        {
+            player.animator.Play("idle");
+        }
+
         base.UpdateState(player);
 
         if (Input.GetButtonDown("Jump") && player.isGrounded)
