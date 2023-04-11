@@ -1064,7 +1064,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24560
+  m_Name: pb_Mesh24558
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1228,7 +1228,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24494
+  m_Name: pb_Mesh24492
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1595,8 +1595,6 @@ GameObject:
   - component: {fileID: 565791776}
   - component: {fileID: 565791775}
   - component: {fileID: 565791774}
-  - component: {fileID: 565791773}
-  - component: {fileID: 565791772}
   m_Layer: 3
   m_Name: Ladder
   m_TagString: Untagged
@@ -1604,32 +1602,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &565791772
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565791771}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4, y: 20.5, z: 1}
-  m_Center: {x: 2, y: 10.25, z: -0.5}
---- !u!114 &565791773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565791771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e087e48b90ce3fb4bb2f41e1ab505308, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 647495695}
 --- !u!64 &565791774
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2041,6 +2013,8 @@ MonoBehaviour:
   headDistance: 0.1
   walkingSpeed: 16
   turnSmoothTime: 0.1
+  inputDirection: {x: 0, y: 0, z: 0}
+  moveDir: {x: 0, y: 0, z: 0}
   isGrounded: 0
   hasHitHead: 0
   turnSmoothVelocity: 0
@@ -4221,7 +4195,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24524
+  m_Name: pb_Mesh24522
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

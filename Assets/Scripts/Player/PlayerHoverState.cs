@@ -39,6 +39,8 @@ public class PlayerHoverState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
+        base.UpdateState(player);
+
         if (player.GetShootingState())
         {
             player.animator.Play("idleAiming");
@@ -63,8 +65,6 @@ public class PlayerHoverState : PlayerBaseState
             hoverComplete = true;
             player.ChangeState(player.fallingState);
         }
-
-        base.UpdateState(player);
 
         // Hover movement logic 
         player.ySpeed += Random.Range(-hoverYSpeedChangeRange, hoverYSpeedChangeRange);

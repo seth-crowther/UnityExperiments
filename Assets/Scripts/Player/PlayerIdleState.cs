@@ -14,6 +14,8 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
+        base.UpdateState(player);
+
         if (player.GetShootingState())
         {
             player.animator.Play("idleAiming");
@@ -23,7 +25,12 @@ public class PlayerIdleState : PlayerBaseState
             player.animator.Play("idle");
         }
 
-        base.UpdateState(player);
+        // If the player isn't grounded, default to the falling state
+        if (!player.isGrounded)
+        {
+            player.ySpeed = 0f;
+            player.ChangeState(player.fallingState);
+        }
 
         if (Input.GetButtonDown("Jump") && player.isGrounded)
         {

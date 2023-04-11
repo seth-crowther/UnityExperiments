@@ -6,7 +6,6 @@ public class PlayerStateManager : MonoBehaviour
 {
     public PlayerBaseState currentState; // Current movement state of thep player
     public PlayerMovingState movingState; // Player state when player is moving along the ground
-    public PlayerClimbingState climbingState; // Player state when player is climbing a climable object
     public PlayerJetpackState jetpackState; // Player state when player is jumping with the jetpack
     public PlayerFallingState fallingState; // Player state when player is falling under gravity
     public PlayerHoverState hoverState; // Player state when player is hovering with the jetpack
@@ -19,9 +18,11 @@ public class PlayerStateManager : MonoBehaviour
 
     public float groundDistance = 1.0f; // Radius of sphere of grounded check using groundCheck
     public float headDistance = 0.1f; // Radius of sphere of hitting head check using headCheck
-    public float walkingSpeed = 16.0f; // Walking speed of the player
+    public float walkingSpeed = 12.0f; // Walking speed of the player
     public float turnSmoothTime = 0.1f; // Time to take the player to turn to face desired direction
 
+    public Vector3 inputDirection;
+    public Vector3 moveDir;
     public bool isGrounded; // Boolean that updates to indicate whether or not the player is grounded
     public bool hasHitHead; // Boolean that updates to indicate whether ot not the player has hit their head
     public float turnSmoothVelocity; // Speed at which the player turns to face the camera direction
@@ -53,7 +54,6 @@ public class PlayerStateManager : MonoBehaviour
         mainCam = Camera.main;
 
         movingState = new PlayerMovingState();
-        climbingState = new PlayerClimbingState();
         jetpackState = new PlayerJetpackState();
         fallingState = new PlayerFallingState();
         hoverState = new PlayerHoverState();
@@ -98,20 +98,20 @@ public class PlayerStateManager : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (!shootingState)
         {
-            if (direction.magnitude >= 0.1f)
+            if (inputDirection.magnitude >= 0.1f)
             {
                 // Calculating desired angle for character to face forward
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+                float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
 
                 // Smooths turning angle so the target angle is reached in turnSmoothTime seconds
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 Vector3 movement = walkingSpeed * Time.deltaTime * moveDir.normalized;
                 controller.Move(movement);
             }
@@ -121,9 +121,9 @@ public class PlayerStateManager : MonoBehaviour
             float mainCamYRot = mainCam.transform.eulerAngles.y;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, mainCamYRot, 0), timeInShootingState / turnToAimSpeed);
 
-            if (direction.magnitude >= 0.1f)
+            if (inputDirection.magnitude >= 0.1f)
             {
-                Vector3 moveDir = ((horizontal * mainCam.transform.right) + (vertical * mainCam.transform.forward)).normalized;
+                moveDir = ((horizontal * mainCam.transform.right) + (vertical * mainCam.transform.forward)).normalized;
                 controller.Move(moveDir * walkingSpeed * Time.deltaTime);
             }
         }

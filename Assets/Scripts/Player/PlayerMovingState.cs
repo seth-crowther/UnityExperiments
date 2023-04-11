@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMovingState : PlayerBaseState
 {
+    private float timeNotMoving = 0f;
+    private float timeUntilIdle = 0.05f;
 
     public override void EnterState(PlayerStateManager player)
     {
@@ -11,14 +13,7 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
-        if (player.GetShootingState())
-        {
-            player.animator.Play("walkingAiming");
-        }
-        else
-        {
-            player.animator.Play("walking");
-        }
+        CalculateAnimation(player);
 
         base.UpdateState(player);
 
@@ -42,7 +37,15 @@ public class PlayerMovingState : PlayerBaseState
         // Important it's a single "&" so both statements are evaluated
         if (Input.GetAxisRaw("Horizontal") == 0f & Input.GetAxisRaw("Vertical") == 0f)
         {
-            player.ChangeState(player.idleState);
+            timeNotMoving += Time.deltaTime;
+            if (timeNotMoving > timeUntilIdle)
+            {
+                player.ChangeState(player.idleState);
+            }
+        }
+        else
+        {
+            timeNotMoving = 0f;
         }
 
         // Adjusting players y velocity based on 
@@ -52,5 +55,30 @@ public class PlayerMovingState : PlayerBaseState
     public override void ExitState(PlayerStateManager player)
     {
         
+    }
+
+    public void CalculateAnimation(PlayerStateManager player)
+    {
+        player.animator.speed = 1f;
+
+        if (player.GetShootingState())
+        {
+            if (player.inputDirection.x > 0)
+            {
+                player.animator.Play("strafeRight");
+            }
+            else if (player.inputDirection.x < 0)
+            {
+                player.animator.Play("strafeLeft");
+            }
+            else
+            {
+                player.animator.Play("walkingAiming");
+            }
+        }
+        else
+        {
+            player.animator.Play("walking");
+        }
     }
 }
