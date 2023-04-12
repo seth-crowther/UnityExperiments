@@ -357,6 +357,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/Audio/PASAudio.cs"
 "Assets/Scripts/Combat/DestroyProj.cs"
+"Assets/Scripts/Combat/EnemyCover.cs"
 "Assets/Scripts/Combat/HandleGun.cs"
 "Assets/Scripts/Enemies/EnemyNavigation.cs"
 "Assets/Scripts/JetpackRings.cs"
