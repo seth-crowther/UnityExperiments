@@ -18,7 +18,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public float groundDistance = 1.0f; // Radius of sphere of grounded check using groundCheck
     public float headDistance = 0.1f; // Radius of sphere of hitting head check using headCheck
-    public float walkingSpeed = 12.0f; // Walking speed of the player
+    public float walkingSpeed = 6.0f; // Walking speed of the player
     public float turnSmoothTime = 0.1f; // Time to take the player to turn to face desired direction
 
     public Vector3 inputDirection;

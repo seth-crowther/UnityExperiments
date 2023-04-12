@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HandleGun : MonoBehaviour
 {
-    public LayerMask allowHit;
+    [SerializeField] private LayerMask allowHit;
     public GameObject grenade;
     public PlayerStateManager player;
     public PASAudio speaker;
