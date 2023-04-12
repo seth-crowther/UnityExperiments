@@ -58,8 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\AmmoCount.cs" />
     <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyMovingState.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyCoverState.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyBaseState.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\Setup.cs" />
@@ -95,10 +98,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStateManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovingState.cs" />
-    <Compile Include="Assets\Scripts\Enemies\EnemyNavigation.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyStateManager.cs" />
     <Compile Include="Assets\Scripts\Movement\WaypointPath.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Movement\MovingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyCover.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
@@ -109,7 +113,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\Scripts\Combat\EnemyCover.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
