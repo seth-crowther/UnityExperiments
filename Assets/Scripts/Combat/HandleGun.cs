@@ -19,7 +19,7 @@ public class HandleGun : MonoBehaviour
     private float shootForce = 50f;
 
     private int ammo;
-    private const int maxAmmo = 10;
+    private const int maxAmmo = 100;
     private float reloadTime = 1f; // Reload time in seconds
 
     void Start()

@@ -358,6 +358,7 @@
 "Assets/Scripts/Audio/PASAudio.cs"
 "Assets/Scripts/Combat/DestroyProj.cs"
 "Assets/Scripts/Combat/HandleGun.cs"
+"Assets/Scripts/Enemies/EnemyNavigation.cs"
 "Assets/Scripts/JetpackRings.cs"
 "Assets/Scripts/Movement/MovingPlatform.cs"
 "Assets/Scripts/Movement/WaypointPath.cs"
