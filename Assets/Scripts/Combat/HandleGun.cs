@@ -15,7 +15,7 @@ public class HandleGun : MonoBehaviour
     private RaycastHit hit;
     private Vector3 shootDir;
     private Vector3 aimPoint;
-    private float aimDistance = 1000f;
+    private float aimDistance = 75f;
     private float shootForce = 50f;
 
     private int ammo;

@@ -13,7 +13,6 @@ public class EnemyStateManager : MonoBehaviour
     public Transform player;
     public Animator animator;
     public NavMeshAgent navMeshAgent;
-    public EnemyCover.CoverPoint currentCoverPoint;
 
     void Start()
     {

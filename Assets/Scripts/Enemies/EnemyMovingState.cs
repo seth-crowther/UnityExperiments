@@ -48,12 +48,17 @@ public class EnemyMovingState : EnemyBaseState
                 }
             }
             
+            // If there aren't any valid cover points, go towards player
+            if (validCoverPoints.Count == 0)
+            {
+                return enemy.player.position;
+            }
+
             EnemyCover.CoverPoint destination = GetClosestCoverPoint(validCoverPoints, enemy);
 
-            // Crashes here for some reason??
             if (HasArrivedAt(destination.GetPoint(), enemy))
             {
-                enemy.currentCoverPoint = destination;
+                enemy.enemyCoverState.SetCoverPoint(destination);
                 enemy.ChangeState(enemy.enemyCoverState);
             }
             else

@@ -8,11 +8,12 @@ public class EnemyCover : MonoBehaviour
     {
         private Vector3 point;
         private bool valid = false;
-        private bool coverDir = false;
+        public Transform transform;
 
-        public CoverPoint(Vector3 point, bool coverDir)
+        public CoverPoint(Vector3 point, Transform transform)
         {
             this.point = point;
+            this.transform = transform;
         }
 
         public void SetPoint(Vector3 value)
@@ -34,16 +35,6 @@ public class EnemyCover : MonoBehaviour
         {
             return valid;
         }
-
-        public bool GetCoverDir()
-        {
-            return coverDir;
-        }
-
-        public static bool ParseCoverDir(Transform coverPoint, Transform parent)
-        {
-            return Vector3.Dot(coverPoint.forward, parent.right) >= 0;
-        }
     }
 
     private CoverPoint[] coverPoints;
@@ -57,7 +48,7 @@ public class EnemyCover : MonoBehaviour
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            coverPoints[i] = new CoverPoint(transform.GetChild(i).position, CoverPoint.ParseCoverDir(transform.GetChild(i), transform));
+            coverPoints[i] = new CoverPoint(transform.GetChild(i).position, transform.GetChild(i));
         }
 
         DoCoverPointValidity();
