@@ -14,8 +14,12 @@ public class EnemyStateManager : MonoBehaviour
     public Animator animator;
     public NavMeshAgent navMeshAgent;
 
+    public int maxHealth = 100;
+    public int health;
+
     void Start()
     {
+        health = maxHealth;
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         enemyMovingState = new EnemyMovingState();

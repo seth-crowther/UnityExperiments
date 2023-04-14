@@ -363,6 +363,7 @@
 "Assets/Scripts/Enemies/EnemyCoverState.cs"
 "Assets/Scripts/Enemies/EnemyMovingState.cs"
 "Assets/Scripts/Enemies/EnemyStateManager.cs"
+"Assets/Scripts/HealthBar.cs"
 "Assets/Scripts/JetpackRings.cs"
 "Assets/Scripts/Movement/MovingPlatform.cs"
 "Assets/Scripts/Movement/WaypointPath.cs"

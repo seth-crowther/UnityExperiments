@@ -38,6 +38,9 @@ public class PlayerStateManager : MonoBehaviour
     public JetpackRings jetpackParticles;
     public Animator animator;
 
+    public int maxHealth = 100;
+    public int health;
+
     public PlayerBaseState GetCurrentState()
     {
         return currentState;
@@ -51,6 +54,7 @@ public class PlayerStateManager : MonoBehaviour
     // Initialising player states and defaulting to the falling state
     void Start()
     {
+        health = maxHealth;
         mainCam = Camera.main;
 
         movingState = new PlayerMovingState();
