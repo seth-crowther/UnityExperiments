@@ -144,4 +144,10 @@ public class PlayerStateManager : MonoBehaviour
         currentState = newState;
         currentState.EnterState(this);
     }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        Mathf.Clamp(health, 0f, maxHealth);
+    }
 }

@@ -16,11 +16,6 @@ public class HealthBar : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            player.health -= 10;
-        }
-
         healthBar.value = player.health;
     }
 }

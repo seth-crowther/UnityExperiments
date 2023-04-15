@@ -8,11 +8,14 @@ public class HitscanShoot : MonoBehaviour
     private Vector3 startingPos;
     private float timeAlive;
     private float timeToTarget = 0.5f;
+    private PlayerStateManager player;
+    private int damage = 5;
 
     void Start()
     {
         timeAlive = 0f;
         startingPos = transform.position;
+        player = FindObjectOfType<PlayerStateManager>();
     }
 
     void Update()
@@ -32,5 +35,16 @@ public class HitscanShoot : MonoBehaviour
     public void SetTarget(Vector3 value)
     {
         target = value;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Hit something");
+        if (other.gameObject.layer == 6)
+        {
+            Debug.Log("Hit player");
+            player.TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }
