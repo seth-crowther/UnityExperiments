@@ -11,7 +11,8 @@ public class EnemyMovingState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy)
     {
-        
+        enemy.animator.SetBool("inCover", false);
+        enemy.navMeshAgent.isStopped = false;
     }
 
     public override void UpdateState(EnemyStateManager enemy)

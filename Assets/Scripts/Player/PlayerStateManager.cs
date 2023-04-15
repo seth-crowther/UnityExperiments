@@ -33,10 +33,11 @@ public class PlayerStateManager : MonoBehaviour
     private bool shootingState = false;
     private float timeInShootingState;
     private float shootingStateTime = 2f;
-    private float turnToAimSpeed = 1.0f;
+    private float turnToAimTime = 0.15f;
 
     public JetpackRings jetpackParticles;
     public Animator animator;
+    private Quaternion rotationOnShoot;
 
     public int maxHealth = 100;
     public int health;
@@ -94,6 +95,7 @@ public class PlayerStateManager : MonoBehaviour
     public void EnterShootingState()
     {
         timeInShootingState = 0f;
+        rotationOnShoot = transform.rotation;
         shootingState = true;
         animator.SetBool("isShooting", shootingState);
     }
@@ -125,7 +127,7 @@ public class PlayerStateManager : MonoBehaviour
         else
         {
             float mainCamYRot = mainCam.transform.eulerAngles.y;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, mainCamYRot, 0), timeInShootingState / turnToAimSpeed);
+            transform.rotation = Quaternion.Slerp(rotationOnShoot, Quaternion.Euler(0, mainCamYRot, 0), timeInShootingState / turnToAimTime);
 
             if (inputDirection != Vector3.zero)
             {
