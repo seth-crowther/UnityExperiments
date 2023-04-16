@@ -362,6 +362,7 @@
 "Assets/Scripts/Enemies/EnemyBaseState.cs"
 "Assets/Scripts/Enemies/EnemyCover.cs"
 "Assets/Scripts/Enemies/EnemyCoverState.cs"
+"Assets/Scripts/Enemies/EnemyDyingState.cs"
 "Assets/Scripts/Enemies/EnemyMovingState.cs"
 "Assets/Scripts/Enemies/EnemyShootingState.cs"
 "Assets/Scripts/Enemies/EnemyStateManager.cs"

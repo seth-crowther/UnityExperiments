@@ -39,10 +39,8 @@ public class HitscanShoot : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit something");
         if (other.gameObject.layer == 6)
         {
-            Debug.Log("Hit player");
             player.TakeDamage(damage);
             Destroy(gameObject);
         }

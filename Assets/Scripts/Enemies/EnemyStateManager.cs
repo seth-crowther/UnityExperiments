@@ -9,6 +9,7 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyMovingState enemyMovingState;
     public EnemyCoverState enemyCoverState;
     public EnemyShootingState enemyShootingState;
+    public EnemyDyingState enemyDyingState;
 
     public LayerMask onlyPlayer;
     public LayerMask obstacles;
@@ -31,6 +32,7 @@ public class EnemyStateManager : MonoBehaviour
         enemyMovingState = new EnemyMovingState();
         enemyCoverState = new EnemyCoverState();
         enemyShootingState = new EnemyShootingState();
+        enemyDyingState = new EnemyDyingState();
 
         currentState = enemyMovingState;
         currentState.EnterState(this);
@@ -38,6 +40,10 @@ public class EnemyStateManager : MonoBehaviour
 
     void Update()
     {
+        if (health <= 0)
+        {
+            ChangeState(enemyDyingState);
+        }
         currentState.UpdateState(this);
     }
 
@@ -52,5 +58,16 @@ public class EnemyStateManager : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletTrail, gunOrigin.position, Quaternion.identity);
         bullet.GetComponent<HitscanShoot>().SetTarget(target);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        Mathf.Clamp(health, 0, maxHealth);
+    }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
     }
 }
