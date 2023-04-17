@@ -15,8 +15,7 @@ public class EnemyCoverState : EnemyBaseState
         timeInState = 0f;
         rotationOnEnter = enemy.transform.rotation;
 
-        // Reload when entering cover
-        Task.Delay((int)(enemy.enemyShootingState.reloadTime * 1000)).ContinueWith(t => enemy.enemyShootingState.ammo = enemy.enemyShootingState.maxAmmo);
+        enemy.Reload();
     }
 
     public override void UpdateState(EnemyStateManager enemy)

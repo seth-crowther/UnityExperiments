@@ -6,7 +6,7 @@ using TMPro;
 
 public class AmmoCount : MonoBehaviour
 {
-    public HandleGun gunScript;
+    public PlayerStateManager player;
 
     private TextMeshProUGUI ammoTracker;
     private int maxAmmo;
@@ -14,11 +14,11 @@ public class AmmoCount : MonoBehaviour
     void Start()
     {
         ammoTracker = gameObject.GetComponent<TextMeshProUGUI>();
-        maxAmmo = gunScript.GetMaxAmmo();
+        maxAmmo = player.maxAmmo;
     }
 
     void Update()
     {
-        ammoTracker.text = gunScript.GetAmmo() + " / " + maxAmmo;
+        ammoTracker.text = player.ammo + " / " + maxAmmo;
     }
 }

@@ -18,13 +18,8 @@ public class HandleGun : MonoBehaviour
     private float aimDistance = 75f;
     private float shootForce = 50f;
 
-    private int ammo;
-    private const int maxAmmo = 100;
-    private float reloadTime = 1f; // Reload time in seconds
-
     void Start()
     {
-        ammo = maxAmmo;
         mainCam = Camera.main;
         screenCentre = new Vector3(Screen.width / 2, Screen.height / 2);
     }
@@ -46,27 +41,17 @@ public class HandleGun : MonoBehaviour
         // Handle reload
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Task.Delay((int)(reloadTime * 1000)).ContinueWith(t => ammo = maxAmmo);
+            player.Reload();
         }
 
-        if (Input.GetMouseButtonDown(0) && ammo > 0) // If left click pressed
+        if (Input.GetMouseButtonDown(0) && player.ammo > 0 && !player.isReloading) // If left click pressed
         {
             speaker.OnBeat();
-            ammo--;
+            player.ammo--;
             player.EnterShootingState();
             GameObject toShoot = Instantiate(grenade, transform.position, Quaternion.identity);
             Rigidbody rb = toShoot.GetComponent<Rigidbody>();
             rb.AddForce(shootDir * shootForce, ForceMode.Impulse);
         }
-    }
-
-    public int GetAmmo()
-    {
-        return ammo;
-    }
-
-    public int GetMaxAmmo()
-    {
-        return maxAmmo;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +24,7 @@ public class EnemyStateManager : MonoBehaviour
 
     public int maxHealth = 100;
     public int health;
+    private bool isReloading = false;
 
     void Start()
     {
@@ -69,5 +71,20 @@ public class EnemyStateManager : MonoBehaviour
     public void Kill()
     {
         Destroy(gameObject);
+    }
+
+    public void Reload()
+    {
+        if (!isReloading)
+        {
+            isReloading = true;
+            Task.Delay((int)(enemyShootingState.reloadTime * 1000)).ContinueWith(t => ResetAmmo());
+        }
+    }
+
+    public void ResetAmmo()
+    {
+        enemyShootingState.ammo = enemyShootingState.maxAmmo;
+        isReloading = false;
     }
 }

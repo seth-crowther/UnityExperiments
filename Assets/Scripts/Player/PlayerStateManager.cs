@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour
@@ -41,6 +42,11 @@ public class PlayerStateManager : MonoBehaviour
 
     public int maxHealth = 100;
     public int health;
+    public bool isReloading = false;
+
+    public int maxAmmo = 100;
+    public int ammo;
+    private float reloadTime = 1f;
 
     public PlayerBaseState GetCurrentState()
     {
@@ -55,6 +61,7 @@ public class PlayerStateManager : MonoBehaviour
     // Initialising player states and defaulting to the falling state
     void Start()
     {
+        ammo = maxAmmo;
         health = maxHealth;
         mainCam = Camera.main;
 
@@ -94,10 +101,13 @@ public class PlayerStateManager : MonoBehaviour
 
     public void EnterShootingState()
     {
-        timeInShootingState = 0f;
-        rotationOnShoot = transform.rotation;
-        shootingState = true;
-        animator.SetBool("isShooting", shootingState);
+        if (!isReloading)
+        {
+            timeInShootingState = 0f;
+            rotationOnShoot = transform.rotation;
+            shootingState = true;
+            animator.SetBool("isShooting", shootingState);
+        }
     }
 
     public void HorizontalMovement()
@@ -149,5 +159,22 @@ public class PlayerStateManager : MonoBehaviour
     {
         health -= amount;
         Mathf.Clamp(health, 0f, maxHealth);
+    }
+
+    public void Reload()
+    {
+        if (!isReloading)
+        {
+            isReloading = true;
+            shootingState = false;
+            animator.SetBool("isShooting", false);
+            Task.Delay((int)(reloadTime * 1000)).ContinueWith(t => ResetAmmo());
+        }
+    }
+
+    public void ResetAmmo()
+    {
+        ammo = maxAmmo;
+        isReloading = false;
     }
 }
