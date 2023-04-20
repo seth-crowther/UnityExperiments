@@ -5,52 +5,125 @@ using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour
 {
-    public PlayerBaseState currentState; // Current movement state of thep player
-    public PlayerMovingState movingState; // Player state when player is moving along the ground
-    public PlayerJetpackState jetpackState; // Player state when player is jumping with the jetpack
-    public PlayerFallingState fallingState; // Player state when player is falling under gravity
-    public PlayerHoverState hoverState; // Player state when player is hovering with the jetpack
-    public PlayerIdleState idleState;
+    public enum PlayerState
+    {
+        currentState,
+        movingState,
+        jetpackState,
+        fallingState,
+        hoverState,
+        idleState
+    }
 
-    public CharacterController controller; // Reference to the player's character controller component
-    public Transform groundCheck; // Empty object that is used to check if player is grounded
-    public Transform headCheck; // Empty object that is used to check if player has hit their head
-    public LayerMask groundMask; // Layer mask that includes all objects that can be walked on
+    // Player states
+    private PlayerBaseState currentState; // Current movement state of the player
+    private PlayerMovingState movingState; // Player state when player is moving along the ground
+    private PlayerJetpackState jetpackState; // Player state when player is jumping with the jetpack
+    private PlayerFallingState fallingState; // Player state when player is falling under gravity
+    private PlayerHoverState hoverState; // Player state when player is hovering with the jetpack
+    private PlayerIdleState idleState;
 
-    public float groundDistance = 1.0f; // Radius of sphere of grounded check using groundCheck
-    public float headDistance = 0.1f; // Radius of sphere of hitting head check using headCheck
-    public float walkingSpeed = 6.0f; // Walking speed of the player
-    public float turnSmoothTime = 0.1f; // Time to take the player to turn to face desired direction
+    private Camera mainCam;
 
-    public Vector3 inputDirection;
-    public Vector3 moveDir;
+    [SerializeField] private CharacterController controller; // Reference to the player's character controller component
+    [SerializeField] private Transform groundCheck; // Empty object that is used to check if player is grounded
+    [SerializeField] private Transform headCheck; // Empty object that is used to check if player has hit their head
+    [SerializeField] private LayerMask groundMask; // Layer mask that includes all objects that can be walked on
+    [SerializeField] private Animator animator;
+    [SerializeField] private JetpackRings jetpackParticles;
+    [SerializeField] private HandleGun gun;
+
+    private float groundDistance = 1.0f; // Radius of sphere of grounded check using groundCheck
+    private float headDistance = 0.1f; // Radius of sphere of hitting head check using headCheck
+    private float walkingSpeed = 6.0f; // Walking speed of the player
+    private float turnSmoothTime = 0.1f; // Time to take the player to turn to face desired direction
+
+    private Vector3 inputDirection;
+    private bool shootingState = false;
+    private float timeInShootingState;
+    private float shootingStateTime = 2f;
+    private float turnToAimTime = 0.15f;
+    private Quaternion rotationOnShoot;
+    private int maxHealth = 100;
+    private int health;
+    private Vector3 moveDir;
+
     public bool isGrounded; // Boolean that updates to indicate whether or not the player is grounded
     public bool hasHitHead; // Boolean that updates to indicate whether ot not the player has hit their head
     public float turnSmoothVelocity; // Speed at which the player turns to face the camera direction
     public float ySpeed; // Y speed of player
 
-    public Camera mainCam;
+    # region Getters and Setters 
+    private PlayerBaseState GetState(PlayerState state)
+    {
+        switch (state)
+        {
+            case PlayerState.currentState:
+                return currentState;
+            case PlayerState.movingState:
+                return movingState;
+            case PlayerState.jetpackState:
+                return jetpackState;
+            case PlayerState.fallingState:
+                return fallingState;
+            case PlayerState.hoverState:
+                return hoverState;
+            case PlayerState.idleState:
+                return idleState;
 
-    private bool shootingState = false;
-    private float timeInShootingState;
-    private float shootingStateTime = 2f;
-    private float turnToAimTime = 0.15f;
-
-    public JetpackRings jetpackParticles;
-    public Animator animator;
-    private Quaternion rotationOnShoot;
-
-    public int maxHealth = 100;
-    public int health;
-    public bool isReloading = false;
-
-    public int maxAmmo = 100;
-    public int ammo;
-    private float reloadTime = 1f;
+            default:
+                throw new System.Exception("State doesn't exist");
+        }
+    }
 
     public PlayerBaseState GetCurrentState()
     {
         return currentState;
+    }
+
+    public PlayerMovingState GetMovingState()
+    {
+        return movingState;
+    }
+
+    public PlayerJetpackState GetJetpackState()
+    {
+        return jetpackState;
+    }
+
+    public PlayerFallingState GetFallingState()
+    {
+        return fallingState;
+    }
+
+    public PlayerHoverState GetHoverState()
+    {
+        return hoverState;
+    }
+
+    public PlayerIdleState GetIdleState()
+    {
+        return idleState;
+    }
+
+    public CharacterController GetController()
+    {
+        return controller;
+    }
+
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+
+    public void SetShootingState(bool value)
+    {
+        shootingState = value;
+    }
+
+    public Vector3 GetInputDirection()
+    {
+        return inputDirection;
     }
 
     public bool GetShootingState()
@@ -58,17 +131,24 @@ public class PlayerStateManager : MonoBehaviour
         return shootingState;
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    # endregion
+
     // Initialising player states and defaulting to the falling state
     void Start()
     {
-        ammo = maxAmmo;
         health = maxHealth;
+
         mainCam = Camera.main;
 
         movingState = new PlayerMovingState();
         jetpackState = new PlayerJetpackState();
         fallingState = new PlayerFallingState();
-        hoverState = new PlayerHoverState();
+        hoverState = new PlayerHoverState(jetpackParticles);
         idleState = new PlayerIdleState();
 
         currentState = idleState;
@@ -101,7 +181,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public void EnterShootingState()
     {
-        if (!isReloading)
+        if (!gun.IsReloading())
         {
             timeInShootingState = 0f;
             rotationOnShoot = transform.rotation;
@@ -148,10 +228,11 @@ public class PlayerStateManager : MonoBehaviour
     }
 
     // Simple function to switch states
-    public void ChangeState(PlayerBaseState newState)
+    public void ChangeState(PlayerState newState)
     {
+        Debug.Log("Switching to " + newState);
         currentState.ExitState(this);
-        currentState = newState;
+        currentState = GetState(newState);
         currentState.EnterState(this);
     }
 
@@ -161,20 +242,5 @@ public class PlayerStateManager : MonoBehaviour
         Mathf.Clamp(health, 0f, maxHealth);
     }
 
-    public void Reload()
-    {
-        if (!isReloading)
-        {
-            isReloading = true;
-            shootingState = false;
-            animator.SetBool("isShooting", false);
-            Task.Delay((int)(reloadTime * 1000)).ContinueWith(t => ResetAmmo());
-        }
-    }
-
-    public void ResetAmmo()
-    {
-        ammo = maxAmmo;
-        isReloading = false;
-    }
+    
 }

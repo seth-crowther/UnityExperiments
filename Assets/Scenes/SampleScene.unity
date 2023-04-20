@@ -502,8 +502,8 @@ MonoBehaviour:
   allowHit:
     serializedVersion: 2
     m_Bits: 520
-  grenade: {fileID: 336414405503211641, guid: 58cc988e7e6986f47bbe852dc14a82bf, type: 3}
   player: {fileID: 647495695}
+  grenade: {fileID: 336414405503211641, guid: 58cc988e7e6986f47bbe852dc14a82bf, type: 3}
   speaker: {fileID: 961100637}
 --- !u!1 &164467463
 GameObject:
@@ -3298,24 +3298,13 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 136
-  groundDistance: 1
-  headDistance: 0.1
-  walkingSpeed: 16
-  turnSmoothTime: 0.1
-  inputDirection: {x: 0, y: 0, z: 0}
-  moveDir: {x: 0, y: 0, z: 0}
+  animator: {fileID: 1900531844088963624}
+  jetpackParticles: {fileID: 344159584}
+  gun: {fileID: 149551554}
   isGrounded: 0
   hasHitHead: 0
   turnSmoothVelocity: 0
   ySpeed: 0
-  mainCam: {fileID: 963194228}
-  jetpackParticles: {fileID: 344159584}
-  animator: {fileID: 1900531844088963624}
-  maxHealth: 100
-  health: 0
-  isReloading: 0
-  maxAmmo: 100
-  ammo: 0
 --- !u!43 &674436302
 Mesh:
   m_ObjectHideFlags: 0
@@ -9054,7 +9043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6916c1871fbe2b409bcd5437599ba5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 647495695}
+  gun: {fileID: 149551554}
 --- !u!43 &2021685457
 Mesh:
   m_ObjectHideFlags: 0

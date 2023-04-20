@@ -7,8 +7,10 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
+        player.GetHoverState().SetHoverComplete(false);
+        player.GetHoverState().SetElapsedHoverTime(0f);
         player.ySpeed = -20f;
-        player.animator.SetBool("isMoving", true);
+        player.GetAnimator().SetBool("isMoving", true);
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -21,7 +23,7 @@ public class PlayerMovingState : PlayerBaseState
         if (!player.isGrounded)
         {
             player.ySpeed = 0f;
-            player.ChangeState(player.fallingState);
+            player.ChangeState(PlayerStateManager.PlayerState.fallingState);
         }
 
         // If the player is grounded, transition to jetpack state if the spacebar is pressed
@@ -29,7 +31,7 @@ public class PlayerMovingState : PlayerBaseState
         {
             if (Input.GetButtonDown("Jump"))
             {
-                player.ChangeState(player.jetpackState);
+                player.ChangeState(PlayerStateManager.PlayerState.jetpackState);
             }
         }
 
@@ -40,7 +42,7 @@ public class PlayerMovingState : PlayerBaseState
             timeNotMoving += Time.deltaTime;
             if (timeNotMoving > timeUntilIdle)
             {
-                player.ChangeState(player.idleState);
+                player.ChangeState(PlayerStateManager.PlayerState.idleState);
             }
         }
         else
@@ -49,7 +51,7 @@ public class PlayerMovingState : PlayerBaseState
         }
 
         // Adjusting players y velocity based on 
-        player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
     }
 
     public override void ExitState(PlayerStateManager player)
@@ -61,17 +63,17 @@ public class PlayerMovingState : PlayerBaseState
     {
         if (player.GetShootingState())
         {
-            if (player.inputDirection.x > 0)
+            if (player.GetInputDirection().x > 0)
             {
-                player.animator.SetInteger("strafe", 2);
+                player.GetAnimator().SetInteger("strafe", 2);
             }
-            else if (player.inputDirection.x < 0)
+            else if (player.GetInputDirection().x < 0)
             {
-                player.animator.SetInteger("strafe", 0);
+                player.GetAnimator().SetInteger("strafe", 0);
             }
             else
             {
-                player.animator.SetInteger("strafe", 1);
+                player.GetAnimator().SetInteger("strafe", 1);
             }
         }
     }

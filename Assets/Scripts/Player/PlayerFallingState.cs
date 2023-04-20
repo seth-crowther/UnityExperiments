@@ -16,9 +16,9 @@ public class PlayerFallingState : PlayerBaseState
 
         // If jump button is held and a hover hasn't been completed, change to hover state
         // Allows player to hover slightly for a short time by using jetpack
-        if (Input.GetButton("Jump") && !player.hoverState.GetHoverComplete())
+        if (Input.GetButton("Jump") && !player.GetHoverState().GetHoverComplete())
         {
-            player.ChangeState(player.hoverState);
+            player.ChangeState(PlayerStateManager.PlayerState.hoverState);
         }
         else
         {
@@ -26,12 +26,12 @@ public class PlayerFallingState : PlayerBaseState
             player.ySpeed += gravity * Time.deltaTime;
         }
 
-        player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
 
         // Once player hits the ground, change player state to moving state
         if (player.isGrounded && player.ySpeed < 0)
         {
-            player.ChangeState(player.idleState);
+            player.ChangeState(PlayerStateManager.PlayerState.movingState);
         }
     }
 

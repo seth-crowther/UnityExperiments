@@ -14,6 +14,8 @@ public class PlayerHoverState : PlayerBaseState
     private float maxHoverTime = 2f;
     private readonly float hoverYSpeedChangeRange = 0.75f;
 
+    private JetpackRings jetpackParticles;
+
     public bool GetHoverComplete()
     {
         return hoverComplete;
@@ -29,12 +31,17 @@ public class PlayerHoverState : PlayerBaseState
         elapsedHoverTime = value;
     }
 
+    public PlayerHoverState(JetpackRings jetpackParticles)
+    {
+        this.jetpackParticles = jetpackParticles;
+    }
+
     public override void EnterState(PlayerStateManager player)
     {
         // Set the range of the hover
         maximumHoverHeight = player.transform.position.y;
         minimumHoverHeight = maximumHoverHeight - hoverDistance;
-        player.jetpackParticles.PlayParticles();
+        jetpackParticles.PlayParticles();
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -44,7 +51,7 @@ public class PlayerHoverState : PlayerBaseState
         // If you let go of Space, enter falling state
         if (!Input.GetButton("Jump"))
         {
-            player.ChangeState(player.fallingState);
+            player.ChangeState(PlayerStateManager.PlayerState.fallingState);
         }
 
         // Hover time ticks up
@@ -54,7 +61,7 @@ public class PlayerHoverState : PlayerBaseState
         if (elapsedHoverTime > maxHoverTime)
         {
             hoverComplete = true;
-            player.ChangeState(player.fallingState);
+            player.ChangeState(PlayerStateManager.PlayerState.fallingState);
         }
 
         // Hover movement logic 
@@ -73,11 +80,11 @@ public class PlayerHoverState : PlayerBaseState
             player.ySpeed += Random.Range(-hoverYSpeedChangeRange, 0f);
         }
 
-        player.controller.Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
     }
 
     public override void ExitState(PlayerStateManager player)
     {
-        player.jetpackParticles.StopParticles();
+        jetpackParticles.StopParticles();
     }
 }
