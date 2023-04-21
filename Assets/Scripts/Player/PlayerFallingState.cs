@@ -23,13 +23,13 @@ public class PlayerFallingState : PlayerBaseState
         else
         {
             // Adjusts y position based on gravity
-            player.ySpeed += gravity * Time.deltaTime;
+            player.SetYSpeed(player.GetYSpeed() + gravity * Time.deltaTime);
         }
 
-        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.GetYSpeed(), 0f) * Time.deltaTime);
 
         // Once player hits the ground, change player state to moving state
-        if (player.isGrounded && player.ySpeed < 0)
+        if (player.isGrounded && player.GetYSpeed() < 0)
         {
             player.ChangeState(PlayerStateManager.PlayerState.movingState);
         }

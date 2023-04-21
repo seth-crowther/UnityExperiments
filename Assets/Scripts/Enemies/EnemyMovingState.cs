@@ -11,13 +11,13 @@ public class EnemyMovingState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy)
     {
-        enemy.animator.SetBool("inCover", false);
-        enemy.navMeshAgent.isStopped = false;
+        enemy.GetAnimator().SetBool("inCover", false);
+        enemy.GetNavMeshAgent().isStopped = false;
     }
 
     public override void UpdateState(EnemyStateManager enemy)
     {
-        enemy.navMeshAgent.destination = GetDestination(enemy);
+        enemy.GetNavMeshAgent().destination = GetDestination(enemy);
     }
 
     public override void ExitState(EnemyStateManager enemy)
@@ -28,7 +28,7 @@ public class EnemyMovingState : EnemyBaseState
     public Vector3 GetDestination(EnemyStateManager enemy)
     {
         List<GameObject> nearbyCover = new List<GameObject>();
-        nearbyObstacles = Physics.OverlapSphere(enemy.transform.position, coverSightRange, enemy.obstacles);
+        nearbyObstacles = Physics.OverlapSphere(enemy.transform.position, coverSightRange, enemy.GetObstaclesLayerMask());
 
         foreach (Collider c in nearbyObstacles)
         {
@@ -52,32 +52,32 @@ public class EnemyMovingState : EnemyBaseState
             // If there aren't any valid cover points, go towards player
             if (validCoverPoints.Count == 0)
             {
-                return enemy.player.position;
+                return enemy.GetPlayerTransform().position;
             }
 
             EnemyCover.CoverPoint destination = GetClosestCoverPoint(validCoverPoints, enemy);
 
             if (HasArrivedAt(destination.GetPoint(), enemy))
             {
-                enemy.enemyCoverState.SetCoverPoint(destination);
-                enemy.ChangeState(enemy.enemyCoverState);
+                enemy.GetCoverState().SetCoverPoint(destination);
+                enemy.ChangeState(EnemyStateManager.EnemyState.coverState);
             }
             else
             {
-                enemy.animator.SetBool("isMoving", true);
+                enemy.GetAnimator().SetBool("isMoving", true);
             }
 
             return destination.GetPoint();
         }
 
-        if (Vector3.Distance(enemy.player.position, enemy.transform.position) <= minPlayerDist)
+        if (Vector3.Distance(enemy.GetPlayerTransform().position, enemy.transform.position) <= minPlayerDist)
         {
-            enemy.animator.SetBool("isMoving", false);
+            enemy.GetAnimator().SetBool("isMoving", false);
             return enemy.transform.position;
         }
 
-        enemy.animator.SetBool("isMoving", true);
-        return enemy.player.position;
+        enemy.GetAnimator().SetBool("isMoving", true);
+        return enemy.GetPlayerTransform().position;
     }
 
     public EnemyCover.CoverPoint GetClosestCoverPoint(HashSet<EnemyCover.CoverPoint> coverPoints, EnemyStateManager enemy)

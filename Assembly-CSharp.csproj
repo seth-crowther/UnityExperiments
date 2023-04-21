@@ -68,7 +68,7 @@
     <Compile Include="Assets\Scripts\Setup.cs" />
     <Compile Include="Assets\Scripts\Audio\PASAudio.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBaseState.cs" />
-    <Compile Include="Assets\Scripts\Combat\DestroyProj.cs" />
+    <Compile Include="Assets\Scripts\Combat\Projectile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\UI\ComboCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />

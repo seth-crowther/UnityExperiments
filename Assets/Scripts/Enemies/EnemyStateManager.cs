@@ -6,37 +6,115 @@ using UnityEngine.AI;
 
 public class EnemyStateManager : MonoBehaviour
 {
-    public EnemyBaseState currentState;
-    public EnemyMovingState enemyMovingState;
-    public EnemyCoverState enemyCoverState;
-    public EnemyShootingState enemyShootingState;
-    public EnemyDyingState enemyDyingState;
+    public enum EnemyState
+    {
+        currentState,
+        movingState,
+        coverState,
+        shootingState,
+        dyingState
+    }
 
-    public LayerMask onlyPlayer;
-    public LayerMask obstacles;
-    public Transform player;
-    public Transform gunOrigin;
-    public Transform playerGunOrigin;
-    public Animator animator;
-    public NavMeshAgent navMeshAgent;
+    // Enemy states
+    private EnemyBaseState currentState;
+    private EnemyMovingState movingState;
+    private EnemyCoverState coverState;
+    private EnemyShootingState shootingState;
+    private EnemyDyingState dyingState;
 
-    public GameObject bulletTrail;
+    private NavMeshAgent navMeshAgent;
+    private LayerMask onlyPlayer;
+    private LayerMask obstacles;
 
-    public int maxHealth = 100;
-    public int health;
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform gunOrigin;
+    [SerializeField] private Transform playerGunOrigin;
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject bulletTrail;
+
+    private int maxHealth = 100;
+    private int health;
     private bool isReloading = false;
+
+    # region Getters and setters
+    public EnemyBaseState GetState(EnemyState state)
+    {
+        switch (state)
+        {
+            case EnemyState.currentState:
+                return currentState;
+            case EnemyState.movingState:
+                return movingState;
+            case EnemyState.coverState:
+                return coverState;
+            case EnemyState.shootingState:
+                return shootingState;
+            case EnemyState.dyingState:
+                return dyingState;
+            default:
+                throw new System.Exception("Enemy state doesn't exist");
+        }
+    }
+
+    public EnemyCoverState GetCoverState()
+    {
+        return coverState;
+    }
+
+    public EnemyShootingState GetShootingState()
+    {
+        return shootingState;
+    }
+
+    public LayerMask GetPlayerLayerMask()
+    {
+        return onlyPlayer;
+    }
+
+    public LayerMask GetObstaclesLayerMask()
+    {
+        return obstacles;
+    }
+
+    public Transform GetPlayerTransform()
+    {
+        return player;
+    }
+
+    public Transform GetGunOrigin()
+    {
+        return gunOrigin;
+    }
+
+    public Transform GetPlayerGunOrigin()
+    {
+        return playerGunOrigin;
+    }
+
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+
+    public NavMeshAgent GetNavMeshAgent()
+    {
+        return navMeshAgent;
+    }
+    # endregion
 
     void Start()
     {
         health = maxHealth;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        onlyPlayer = LayerMask.GetMask("Player");
+        obstacles = LayerMask.GetMask("Obstacles");
 
-        enemyMovingState = new EnemyMovingState();
-        enemyCoverState = new EnemyCoverState();
-        enemyShootingState = new EnemyShootingState();
-        enemyDyingState = new EnemyDyingState();
+        movingState = new EnemyMovingState();
+        coverState = new EnemyCoverState();
+        shootingState = new EnemyShootingState();
+        dyingState = new EnemyDyingState();
 
-        currentState = enemyMovingState;
+        currentState = movingState;
         currentState.EnterState(this);
     }
 
@@ -44,15 +122,15 @@ public class EnemyStateManager : MonoBehaviour
     {
         if (health <= 0)
         {
-            ChangeState(enemyDyingState);
+            ChangeState(EnemyState.dyingState);
         }
         currentState.UpdateState(this);
     }
 
-    public void ChangeState(EnemyBaseState newState)
+    public void ChangeState(EnemyState newState)
     {
         currentState.ExitState(this);
-        currentState = newState;
+        currentState = GetState(newState);
         currentState.EnterState(this);
     }
 
@@ -78,13 +156,13 @@ public class EnemyStateManager : MonoBehaviour
         if (!isReloading)
         {
             isReloading = true;
-            Task.Delay((int)(enemyShootingState.reloadTime * 1000)).ContinueWith(t => ResetAmmo());
+            Task.Delay((int)(shootingState.reloadTime * 1000)).ContinueWith(t => ResetAmmo());
         }
     }
 
     public void ResetAmmo()
     {
-        enemyShootingState.ammo = enemyShootingState.maxAmmo;
+        shootingState.ammo = shootingState.maxAmmo;
         isReloading = false;
     }
 }

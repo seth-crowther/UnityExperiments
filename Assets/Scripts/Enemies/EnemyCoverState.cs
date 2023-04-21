@@ -10,8 +10,8 @@ public class EnemyCoverState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy)
     {
-        enemy.animator.SetBool("inCover", true);
-        enemy.navMeshAgent.isStopped = true;
+        enemy.GetAnimator().SetBool("inCover", true);
+        enemy.GetNavMeshAgent().isStopped = true;
         timeInState = 0f;
         rotationOnEnter = enemy.transform.rotation;
 
@@ -27,12 +27,12 @@ public class EnemyCoverState : EnemyBaseState
 
         if (!coverPoint.IsValid())
         {
-            enemy.ChangeState(enemy.enemyMovingState);
+            enemy.ChangeState(EnemyStateManager.EnemyState.movingState);
         }
 
-        if (enemy.enemyShootingState.ammo == enemy.enemyShootingState.maxAmmo)
+        if (enemy.GetShootingState().ammo == enemy.GetShootingState().maxAmmo)
         {
-            enemy.ChangeState(enemy.enemyShootingState);
+            enemy.ChangeState(EnemyStateManager.EnemyState.shootingState);
         }
     }
 

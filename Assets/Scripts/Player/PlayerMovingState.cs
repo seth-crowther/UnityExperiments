@@ -9,7 +9,7 @@ public class PlayerMovingState : PlayerBaseState
     {
         player.GetHoverState().SetHoverComplete(false);
         player.GetHoverState().SetElapsedHoverTime(0f);
-        player.ySpeed = -20f;
+        player.SetYSpeed(-20f);
         player.GetAnimator().SetBool("isMoving", true);
     }
 
@@ -22,7 +22,7 @@ public class PlayerMovingState : PlayerBaseState
         // If the player isn't grounded, default to the falling state
         if (!player.isGrounded)
         {
-            player.ySpeed = 0f;
+            player.SetYSpeed(0f);
             player.ChangeState(PlayerStateManager.PlayerState.fallingState);
         }
 
@@ -51,7 +51,7 @@ public class PlayerMovingState : PlayerBaseState
         }
 
         // Adjusting players y velocity based on 
-        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.GetYSpeed(), 0f) * Time.deltaTime);
     }
 
     public override void ExitState(PlayerStateManager player)

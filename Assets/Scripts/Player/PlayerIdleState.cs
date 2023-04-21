@@ -19,7 +19,7 @@ public class PlayerIdleState : PlayerBaseState
         // If the player isn't grounded, default to the falling state
         if (!player.isGrounded)
         {
-            player.ySpeed = 0f;
+            player.SetYSpeed(0f);
             player.ChangeState(PlayerStateManager.PlayerState.fallingState);
         }
 

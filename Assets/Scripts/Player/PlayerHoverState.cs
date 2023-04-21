@@ -65,22 +65,22 @@ public class PlayerHoverState : PlayerBaseState
         }
 
         // Hover movement logic 
-        player.ySpeed += Random.Range(-hoverYSpeedChangeRange, hoverYSpeedChangeRange);
+        player.SetYSpeed(player.GetYSpeed() + Random.Range(-hoverYSpeedChangeRange, hoverYSpeedChangeRange));
         // If y position is about to fall below min height or rise above max height
         // Reset y speed and make sure ySpeed is changed to stay within hover range
-        float yPosNextFrame = player.transform.position.y + player.ySpeed * Time.deltaTime;
+        float yPosNextFrame = player.transform.position.y + player.GetYSpeed() * Time.deltaTime;
         if (yPosNextFrame < minimumHoverHeight)
         {
-            player.ySpeed = 0f;
-            player.ySpeed += Random.Range(0f, hoverYSpeedChangeRange);
+            player.SetYSpeed(0f);
+            player.SetYSpeed(player.GetYSpeed() + Random.Range(0f, hoverYSpeedChangeRange));
         }
         else if (yPosNextFrame > maximumHoverHeight)
         {
-            player.ySpeed = 0f;
-            player.ySpeed += Random.Range(-hoverYSpeedChangeRange, 0f);
+            player.SetYSpeed(0f);
+            player.SetYSpeed(player.GetYSpeed() + Random.Range(-hoverYSpeedChangeRange, 0f));
         }
 
-        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.GetYSpeed(), 0f) * Time.deltaTime);
     }
 
     public override void ExitState(PlayerStateManager player)

@@ -15,7 +15,7 @@ public class EnemyShootingState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy)
     {
-        enemy.animator.SetBool("isShooting", true);
+        enemy.GetAnimator().SetBool("isShooting", true);
         timeInState = 0f;
     }
 
@@ -26,16 +26,16 @@ public class EnemyShootingState : EnemyBaseState
 
         if (ammo <= 0)
         {
-            enemy.ChangeState(enemy.enemyCoverState);
+            enemy.ChangeState(EnemyStateManager.EnemyState.coverState);
         }
 
         // Point towards player
-        enemy.transform.forward = (enemy.player.position - enemy.transform.position).normalized;
+        enemy.transform.forward = (enemy.GetPlayerTransform().position - enemy.transform.position).normalized;
 
         // Determine line of sight by whether enemy's gun origin can "see" player's gun origin
-        Vector3 shootDir = (enemy.playerGunOrigin.position - enemy.gunOrigin.position).normalized;
-        Ray lineOfSight = new Ray(enemy.gunOrigin.position, shootDir);
-        if (Physics.Raycast(lineOfSight, out hit, 200f, enemy.onlyPlayer))
+        Vector3 shootDir = (enemy.GetPlayerGunOrigin().position - enemy.GetGunOrigin().position).normalized;
+        Ray lineOfSight = new Ray(enemy.GetGunOrigin().position, shootDir);
+        if (Physics.Raycast(lineOfSight, out hit, 200f, enemy.GetPlayerLayerMask()))
         {
             ShootGun(enemy, hit.point + (shootDir * bulletOvershoot));
         }
@@ -43,7 +43,7 @@ public class EnemyShootingState : EnemyBaseState
 
     public override void ExitState(EnemyStateManager enemy)
     {
-        enemy.animator.SetBool("isShooting", false);
+        enemy.GetAnimator().SetBool("isShooting", false);
     }
 
     public void ShootGun(EnemyStateManager enemy, Vector3 target)
@@ -56,7 +56,7 @@ public class EnemyShootingState : EnemyBaseState
         }
         else if (ammo <= 0)
         {
-            enemy.ChangeState(enemy.enemyCoverState);
+            enemy.ChangeState(EnemyStateManager.EnemyState.coverState);
         }
     }
 }

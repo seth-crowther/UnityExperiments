@@ -24,11 +24,11 @@ public class PlayerStateManager : MonoBehaviour
     private PlayerIdleState idleState;
 
     private Camera mainCam;
+    private LayerMask obstacles;
 
     [SerializeField] private CharacterController controller; // Reference to the player's character controller component
     [SerializeField] private Transform groundCheck; // Empty object that is used to check if player is grounded
     [SerializeField] private Transform headCheck; // Empty object that is used to check if player has hit their head
-    [SerializeField] private LayerMask groundMask; // Layer mask that includes all objects that can be walked on
     [SerializeField] private Animator animator;
     [SerializeField] private JetpackRings jetpackParticles;
     [SerializeField] private HandleGun gun;
@@ -47,11 +47,12 @@ public class PlayerStateManager : MonoBehaviour
     private int maxHealth = 100;
     private int health;
     private Vector3 moveDir;
+    private float turnSmoothVelocity; // Speed at which the player turns to face the camera direction
+    private float ySpeed; // Y speed of player
 
     public bool isGrounded; // Boolean that updates to indicate whether or not the player is grounded
     public bool hasHitHead; // Boolean that updates to indicate whether ot not the player has hit their head
-    public float turnSmoothVelocity; // Speed at which the player turns to face the camera direction
-    public float ySpeed; // Y speed of player
+    
 
     # region Getters and Setters 
     private PlayerBaseState GetState(PlayerState state)
@@ -72,7 +73,7 @@ public class PlayerStateManager : MonoBehaviour
                 return idleState;
 
             default:
-                throw new System.Exception("State doesn't exist");
+                throw new System.Exception("Player state doesn't exist");
         }
     }
 
@@ -136,6 +137,16 @@ public class PlayerStateManager : MonoBehaviour
         return health;
     }
 
+    public float GetYSpeed()
+    {
+        return ySpeed;
+    }
+
+    public void SetYSpeed(float value)
+    {
+        ySpeed = value;
+    }
+
     # endregion
 
     // Initialising player states and defaulting to the falling state
@@ -144,6 +155,7 @@ public class PlayerStateManager : MonoBehaviour
         health = maxHealth;
 
         mainCam = Camera.main;
+        obstacles = LayerMask.GetMask("Obstacles");
 
         movingState = new PlayerMovingState();
         jetpackState = new PlayerJetpackState();
@@ -158,10 +170,10 @@ public class PlayerStateManager : MonoBehaviour
     void Update()
     {
         // Updates isGrounded and hasHitHead booleans
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, obstacles, QueryTriggerInteraction.Ignore);
         if (!isGrounded)
         {
-            hasHitHead = Physics.CheckSphere(headCheck.position, headDistance, groundMask, QueryTriggerInteraction.Ignore);
+            hasHitHead = Physics.CheckSphere(headCheck.position, headDistance, obstacles, QueryTriggerInteraction.Ignore);
         }
 
         // Updates player based on the current player state's update method

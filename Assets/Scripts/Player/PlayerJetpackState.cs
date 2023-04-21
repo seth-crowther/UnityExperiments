@@ -10,7 +10,7 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        player.ySpeed = Mathf.Sqrt(jetpackJumpHeight * -2f * gravity);
+        player.SetYSpeed(Mathf.Sqrt(jetpackJumpHeight * -2f * gravity));
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -20,10 +20,10 @@ public class PlayerJetpackState : PlayerBaseState
         // If player hits head on an object while jumping, y velocity is reset
         if (player.hasHitHead)
         {
-            player.ySpeed = -1f;
+            player.SetYSpeed(-1f);
         }
 
-        if (player.ySpeed < 0)
+        if (player.GetYSpeed() < 0)
         {
             // Once player hits the ground, change player state to moving state
             if (player.isGrounded)
@@ -37,8 +37,8 @@ public class PlayerJetpackState : PlayerBaseState
         }
 
         // Adjusts y position based on gravity
-        player.ySpeed += gravity * Time.deltaTime;
-        player.GetController().Move(new Vector3(0f, player.ySpeed, 0f) * Time.deltaTime);
+        player.SetYSpeed(player.GetYSpeed() + gravity * Time.deltaTime);
+        player.GetController().Move(new Vector3(0f, player.GetYSpeed(), 0f) * Time.deltaTime);
     }
 
     public override void ExitState(PlayerStateManager player)

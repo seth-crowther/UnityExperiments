@@ -3168,12 +3168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87be29ce24e6734384b315240a14edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlyPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  obstacles:
-    serializedVersion: 2
-    m_Bits: 8
   player: {fileID: 1060841265}
   gunOrigin: {fileID: 1498411121}
   playerGunOrigin: {fileID: 149551553}
@@ -3295,16 +3289,11 @@ MonoBehaviour:
   controller: {fileID: 1060841266}
   groundCheck: {fileID: 1943545628}
   headCheck: {fileID: 603554376}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 136
   animator: {fileID: 1900531844088963624}
   jetpackParticles: {fileID: 344159584}
   gun: {fileID: 149551554}
   isGrounded: 0
   hasHitHead: 0
-  turnSmoothVelocity: 0
-  ySpeed: 0
 --- !u!43 &674436302
 Mesh:
   m_ObjectHideFlags: 0
