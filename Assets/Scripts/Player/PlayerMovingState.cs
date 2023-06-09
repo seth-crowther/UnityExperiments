@@ -7,8 +7,6 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        player.GetHoverState().SetHoverComplete(false);
-        player.GetHoverState().SetElapsedHoverTime(0f);
         player.SetYSpeed(-20f);
         player.GetAnimator().SetBool("isMoving", true);
     }

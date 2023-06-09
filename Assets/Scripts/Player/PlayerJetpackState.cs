@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerJetpackState : PlayerBaseState
 {
-    public float jetpackJumpHeight = 15.0f;
+    public float jetpackJumpHeight = 5.0f;
     public float gravity = -60f;
 
 

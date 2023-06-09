@@ -6,9 +6,6 @@ public class PlayerIdleState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)
     {
-        // Reset hover time when player is grounded
-        player.GetHoverState().SetHoverComplete(false);
-        player.GetHoverState().SetElapsedHoverTime(0f);
         player.GetAnimator().SetBool("isMoving", false);
     }
 
