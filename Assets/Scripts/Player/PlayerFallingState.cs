@@ -3,7 +3,7 @@ using System;
 
 public class PlayerFallingState : PlayerBaseState
 {
-    public static float gravity = -60f;
+    public float gravity = -60f;
     
     public override void EnterState(PlayerStateManager player)
     {
@@ -14,8 +14,17 @@ public class PlayerFallingState : PlayerBaseState
     {
         base.UpdateState(player);
 
-        // Adjusts y position based on gravity
-        player.SetYSpeed(player.GetYSpeed() + gravity * Time.deltaTime);
+        // If jump button is held and a hover hasn't been completed, change to hover state
+        // Allows player to hover slightly for a short time by using jetpack
+        if (Input.GetButton("Jump") && !player.GetHoverState().GetHoverComplete())
+        {
+            player.ChangeState(PlayerStateManager.PlayerState.hoverState);
+        }
+        else
+        {
+            // Adjusts y position based on gravity
+            player.SetYSpeed(player.GetYSpeed() + gravity * Time.deltaTime);
+        }
 
         player.GetController().Move(new Vector3(0f, player.GetYSpeed(), 0f) * Time.deltaTime);
 

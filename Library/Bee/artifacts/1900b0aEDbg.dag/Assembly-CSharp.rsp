@@ -366,13 +366,13 @@
 "Assets/Scripts/Enemies/EnemyMovingState.cs"
 "Assets/Scripts/Enemies/EnemyShootingState.cs"
 "Assets/Scripts/Enemies/EnemyStateManager.cs"
-"Assets/Scripts/Movement/BouncePad.cs"
+"Assets/Scripts/JetpackRings.cs"
 "Assets/Scripts/Movement/MovingPlatform.cs"
 "Assets/Scripts/Movement/WaypointPath.cs"
 "Assets/Scripts/Player/MouseLook.cs"
 "Assets/Scripts/Player/PlayerBaseState.cs"
-"Assets/Scripts/Player/PlayerBouncePadState.cs"
 "Assets/Scripts/Player/PlayerFallingState.cs"
+"Assets/Scripts/Player/PlayerHoverState.cs"
 "Assets/Scripts/Player/PlayerIdleState.cs"
 "Assets/Scripts/Player/PlayerJetpackState.cs"
 "Assets/Scripts/Player/PlayerMovingState.cs"
@@ -416,8 +416,6 @@
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
-"Assets/Z_Archive/JetpackRings.cs"
-"Assets/Z_Archive/PlayerHoverState.cs"
 -langversion:9.0
 
 /deterministic

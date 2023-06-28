@@ -11,8 +11,8 @@ public class PlayerStateManager : MonoBehaviour
         movingState,
         jetpackState,
         fallingState,
-        idleState,
-        bouncePadState
+        hoverState,
+        idleState
     }
 
     // Player states
@@ -20,8 +20,8 @@ public class PlayerStateManager : MonoBehaviour
     private PlayerMovingState movingState; // Player state when player is moving along the ground
     private PlayerJetpackState jetpackState; // Player state when player is jumping with the jetpack
     private PlayerFallingState fallingState; // Player state when player is falling under gravity
+    private PlayerHoverState hoverState; // Player state when player is hovering with the jetpack
     private PlayerIdleState idleState;
-    private PlayerBouncePadState bouncePadState;
 
     private Camera mainCam;
     private LayerMask obstacles;
@@ -30,8 +30,8 @@ public class PlayerStateManager : MonoBehaviour
     [SerializeField] private Transform groundCheck; // Empty object that is used to check if player is grounded
     [SerializeField] private Transform headCheck; // Empty object that is used to check if player has hit their head
     [SerializeField] private Animator animator;
+    [SerializeField] private JetpackRings jetpackParticles;
     [SerializeField] private HandleGun gun;
-    [SerializeField] private Rigidbody rb;
 
     private float groundDistance = 1.0f; // Radius of sphere of grounded check using groundCheck
     private float headDistance = 0.1f; // Radius of sphere of hitting head check using headCheck
@@ -67,10 +67,10 @@ public class PlayerStateManager : MonoBehaviour
                 return jetpackState;
             case PlayerState.fallingState:
                 return fallingState;
+            case PlayerState.hoverState:
+                return hoverState;
             case PlayerState.idleState:
                 return idleState;
-            case PlayerState.bouncePadState:
-                return bouncePadState;
 
             default:
                 throw new System.Exception("Player state doesn't exist");
@@ -97,14 +97,14 @@ public class PlayerStateManager : MonoBehaviour
         return fallingState;
     }
 
+    public PlayerHoverState GetHoverState()
+    {
+        return hoverState;
+    }
+
     public PlayerIdleState GetIdleState()
     {
         return idleState;
-    }
-
-    public PlayerBouncePadState GetBouncePadState() 
-    {
-        return bouncePadState;
     }
 
     public CharacterController GetController()
@@ -115,11 +115,6 @@ public class PlayerStateManager : MonoBehaviour
     public Animator GetAnimator()
     {
         return animator;
-    }
-
-    public Rigidbody GetRigidbody()
-    {
-        return rb;
     }
 
     public void SetShootingState(bool value)
@@ -165,8 +160,8 @@ public class PlayerStateManager : MonoBehaviour
         movingState = new PlayerMovingState();
         jetpackState = new PlayerJetpackState();
         fallingState = new PlayerFallingState();
+        hoverState = new PlayerHoverState(jetpackParticles);
         idleState = new PlayerIdleState();
-        bouncePadState = new PlayerBouncePadState();
 
         currentState = idleState;
         currentState.EnterState(this);
@@ -179,7 +174,6 @@ public class PlayerStateManager : MonoBehaviour
         if (!isGrounded)
         {
             hasHitHead = Physics.CheckSphere(headCheck.position, headDistance, obstacles, QueryTriggerInteraction.Ignore);
-            ChangeState(PlayerState.fallingState);
         }
 
         // Updates player based on the current player state's update method
@@ -259,4 +253,6 @@ public class PlayerStateManager : MonoBehaviour
         health -= amount;
         Mathf.Clamp(health, 0f, maxHealth);
     }
+
+    
 }
